@@ -1,0 +1,16 @@
+Name,Stat Effect,Effect Increase
+Minor Health Potion,Health,50
+Greater Health Potion,Health,100
+Major Health Potion,Health,200
+Minor Mana Potion,Mana,50
+Greater Mana Potion,Mana,100
+Major Mana Potion,Mana,200
+Potion of Strength,Attack,10
+Potion of Might,Attack,20
+Potion of Power,Attack,30
+Potion of Endurance,Defence,10
+Potion of Toughness,Defence,20
+Potion of Fortitude,Defence,30
+Potion of Magic, Magic Attack,10
+Potion of Sorcery, Magic Attack,20
+Potion of Wizardry, Magic Attack,30

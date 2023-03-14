@@ -1,0 +1,190 @@
+Name,Type,Attack,Defense,Level,Class
+Apprentice Wand,Weapon,5,0,1,Magician
+Novice Robe,Armor,0,5,1,Magician
+Worn Shoes,Boots,0,2,1,Magician
+Training Sword,Weapon,10,0,1,Knight
+Leather Armor,Armor,0,10,1,Knight
+Leather Boots,Boots,0,5,1,Knight
+Wooden Bow,Weapon,8,0,1,Archer
+Leather Quiver,Armor,0,5,1,Archer
+Leather Boots,Boots,0,5,1,Archer
+Journeyman Wand,Weapon,10,0,5,Magician
+Apprentice Robe,Armor,0,10,5,Magician
+Enchanted Shoes,Boots,0,5,5,Magician
+Knight's Sword,Weapon,20,0,5,Knight
+Chainmail Armor,Armor,0,20,5,Knight
+Iron Boots,Boots,0,10,5,Knight
+Reinforced Bow,Weapon,15,0,5,Archer
+Leather Armor,Armor,0,15,5,Archer
+Boots of Agility,Boots,0,5,5,Archer
+Master Wand,Weapon,15,0,10,Magician
+Journeyman Robe,Armor,0,20,10,Magician
+Feathered Boots,Boots,0,10,10,Magician
+Greatsword,Weapon,35,0,10,Knight
+Plate Armor,Armor,0,30,10,Knight
+Boots of Swiftness,Boots,0,10,10,Knight
+Longbow,Weapon,20,0,10,Archer
+Scale Armor,Armor,0,25,10,Archer
+Boots of the Wind,Boots,0,10,10,Archer
+Archmage Staff,Weapon,25,0,15,Magician
+Master Robe,Armor,0,30,15,Magician
+Boots of Flight,Boots,0,15,15,Magician
+Great Hammer,Weapon,50,0,15,Knight
+Dragon Scale Armor,Armor,0,40,15,Knight
+Iron Shield,Shield,0,25,15,Knight
+Composite Bow,Weapon,30,0,15,Archer
+Chainmail Armor,Armor,0,35,15,Archer
+Boots of the Hunter,Boots,0,15,15,Archer
+Elementalist Staff,Weapon,40,0,20,Magician
+Ancient Robe,Armor,0,50,20,Magician
+Boots of the Magus,Boots,0,20,20,Magician
+Battleaxe of the Titans,Weapon,60,0,20,Knight
+Shield of the Mountain,Shield,0,40,20,Knight
+Sword of the Sun,Weapon,75,0,20,Knight
+Compound Bow,Weapon,40,0,20,Archer
+Scale Mail,Armor,0,45,20,Archer
+Boots of the Nomad,Boots,0,20,20,Archer
+Staff of the Archmagus,Weapon,50,0,25,Magician
+Robe of the Elders,Armor,0,60,25,Magician
+Boots of the Elements,Boots,0,25,25,Magician
+Sword of the King,Weapon,90,0,25,Knight
+Breastplate of the Crusader,Armor,0,50,25,Knight
+Gloves of the Crusader,Gloves,0,10,25,Knight
+Longbow of the Ranger,Weapon,50,0,25,Archer
+Studded Leather Armor,Armor,0,55,25,Archer
+Boots of the Forest,Boots,0,25,25,Archer
+Staff of the Elements,Weapon,60,0,30,Magician
+Robe of the Archmagus,Armor,0,70,30,Magician
+Boots of the Archmagus,Boots,0,30,30,Magician
+Great Axe of the Warlord,Weapon,120,0,30,Knight
+Plate Mail,Armor,0,80,30,Knight
+Helm of the Champion,Helmet,0,30,30,Knight
+Crossbow of the Marksman,Weapon,70,0,30,Archer
+Dragon Scale Armor,Armor,0,70,30,Archer
+Boots of the Marksman,Boots,0,30,30,Archer
+Staff of the Dragonborn,Weapon,80,0,35,Magician
+Robe of the Dragonborn,Armor,0,90,35,Magician
+Boots of the Dragonborn,Boots,0,35,35,Magician
+Sword of the Paladin,Weapon,150,0,35,Knight
+Plate Mail of the Paladin,Armor,0,100,35,Knight
+Shield of the Paladin,Shield,0,60,35,Knight
+Recurve Bow of the Assassin,Weapon,90,0,35,Archer
+Leather Armor of the Assassin,Armor,0,80,35,Archer
+Boots of the Assassin,Boots,0,35,35,Archer
+Staff of the High Priest,Weapon,100,0,40,Magician
+Robe of the High Priest,Armor,0,110,40,Magician
+Boots of the High Priest,Boots,0,40,40,Magician
+Hammer of the Crusader,Weapon,200,0,40,Knight
+Breastplate of the High Inquisitor,Armor,0,120,40,Knight
+Gloves of the High Inquisitor,Gloves,0,20,40,Knight
+Longbow of the Hunter,Weapon,110,0,40,Archer
+Dragon Scale Mail,Armor,0,90,40,Archer
+Boots of the Hunter's Mark,Boots,0,40,40,Archer
+Staff of the High Wizard,Weapon,120,0,45,Magician
+Robe of the High Wizard,Armor,0,130,45,Magician
+Boots of the High Wizard,Boots,0,45,45,Magician
+Sword of the Grand Knight,Weapon,250,0,45,Knight
+Full Plate Mail,Armor,0,150,45,Knight
+Helm of the Grand Knight,Helmet,0,50,45,Knight
+Composite Bow of the Ranger,Weapon,130,0,45,Archer
+Leather Armor of the Ranger,Armor,0,100,45,Archer
+Boots of the Ranger,Boots,0,45,45,Archer
+Staff of the Archmage,Weapon,140,0,50,Magician
+Robe of the Archmage,Armor,0,150,50,Magician
+Boots of the Archmage,Boots,0,50,50,Magician
+Sword of the High King,Weapon,300,0,50,Knight
+Plate Mail of the High King,Armor,0,180,50,Knight
+Shield of the High King,Shield,0,90,50,Knight
+Greatbow of the Marksman,Weapon,150,0,50,Archer
+Dragon Scale Plate Mail,Armor,0,120,50,Archer
+Boots of the Marksman's Mastery,Boots,0,50,50,Archer
+Staff of the Grand Wizard,Weapon,160,0,55,Magician
+Robe of the Grand Wizard,Armor,0,170,55,Magician
+Boots of the Grand Wizard,Boots,0,55,55,Magician
+Hammer of the Inquisitor,Weapon,350,0,55,Knight
+Breastplate of the Divine Crusader,Armor,0,200,55,Knight
+Gloves of the Divine Crusader,Gloves,0,30,55,Knight
+Recurve Bow of the Hunter,Weapon,170,0,55,Archer
+Dragon Scale Boots,Boots,0,60,55,Archer
+Boots of the Hunter's Mastery,Boots,0,55,55,Archer
+Staff of the High Archmage,Weapon,180,0,60,Magician
+Robe of the High Archmage,Armor,0,190,60,Magician
+Boots of the High Archmage,Boots,0,60,60,Magician
+Sword of the Divine Knight,Weapon,400,0,60,Knight
+Full Plate Mail of the Divine Knight,Armor,0,220,60,Knight
+Helm of the Divine Knight,Helmet,0,70,60,Knight
+Composite Bow of the Hunter,Weapon,190,0,60,Archer
+Dragon Scale Helm,Helmet,0,40,60,Archer
+Boots of the Hunter's Perfection,Boots,0,60,60,Archer
+Staff of the Divine Wizard,Weapon,200,0,65,Magician
+Robe of the Divine Wizard,Armor,0,210,65,Magician
+Boots of the Divine Wizard,Boots,0,65,65,Magician
+Sword of the Immortal,Weapon,450,0,65,Knight
+Divine Plate Mail,Armor,0,240,65,Knight
+Shield of the Immortal,Shield,0,120,65,Knight
+Longbow of the Elite Ranger,Weapon,210,0,65,Archer
+Dragon Scale Gauntlets,Gloves,0,50,65,Archer
+Boots of the Elite Ranger,Boots,0,70,65,Archer
+Staff of the Grand Archmage,Weapon,220,0,70,Magician
+Robe of the Grand Archmage,Armor,0,230,70,Magician
+Boots of the Grand Archmage,Boots,0,70,70,Magician
+Sword of the Celestial Knight,Weapon,500,0,70,Knight
+Plate Mail of the Celestial Knight,Armor,0,260,70,Knight
+Gloves of the Celestial Knight,Gloves,0,40,70,Knight
+Compound Bow of the Marksman,Weapon,230,0,70,Archer
+Dragon Scale Leggings,Leggings,0,70,70,Archer
+Boots of the Marksman's Perfection,Boots,0,75,70,Archer
+Staff of the Divine Archmage,Weapon,240,0,75,Magician
+Robe of the Divine Archmage,Armor,0,250,75,Magician
+Boots of the Divine Archmage,Boots,0,75,75,Magician
+Sword of the Divine Crusader,Weapon,550,0,75,Knight
+Breastplate of the Holy Champion,Armor,0,280,75,Knight
+Helm of the Divine Crusader,Helmet,0,90,75,Knight
+Recurve Bow of the Elite Hunter,Weapon,250,0,75,Archer
+Dragon Scale Chestplate,Armor,0,150,75,Archer
+Boots of the Hunter's Ascendance,Boots,0,80,75,Archer
+Staff of the Divine Grand Wizard,Weapon,260,0,80,Magician
+Robe of the Divine Grand Wizard,Armor,0,270,80,Magician
+Boots of the Divine Grand Wizard,Boots,0,80,80,Magician
+Sword of the Divine Knight Champion,Weapon,600,0,80,Knight
+Full Plate Mail of the Divine Knight Champion,Armor,0,300,80,Knight
+Shield of the Divine Knight Champion,Shield,0,150,80,Knight
+Longbow of the Master Marksman,Weapon,270,0,80,Archer
+Dragon Scale Shoulders,Shoulders,0,60,80,Archer
+Boots of the Hunter's Transcendence,Boots,0,85,80,Archer
+Staff of the Divine Archmage King,Weapon,280,0,85,Magician
+Robe of the Divine Archmage King,Armor,0,290,85,Magician
+Boots of the Divine Archmage King,Boots,0,85,85,Magician
+Sword of the Divine Paladin,Weapon,650,0,85,Knight
+Divine Plate Mail of the Divine Paladin,Armor,0,320,85,Knight
+Gauntlets of the Divine Paladin,Gloves,0,60,85,Knight
+Compound Bow of the Master Hunter,Weapon,290,0,85,Archer
+Dragon Scale Helmet,Helmet,0,110,85,Archer
+Boots of the Hunter's Perfection,Boots,0,90,85,Archer
+Staff of the Divine Wizard Lord,Weapon,300,0,90,Magician
+Robe of the Divine Wizard Lord,Armor,0,310,90,Magician
+Boots of the Divine Wizard Lord,Boots,0,90,90,Magician
+Sword of the Celestial Crusader,Weapon,700,0,90,Knight
+Breastplate of the Celestial Champion,Armor,0,360,90,Knight
+Helm of the Celestial Crusader,Helmet,0,120,90,Knight
+Recurve Bow of the Master Marksman,Weapon,310,0,90,Archer
+Dragon Scale Greaves,Greaves,0,90,90,Archer
+Boots of the Hunter's Supremacy,Boots,0,95,90,Archer
+Staff of the Divine Archmage Emperor,Weapon,320,0,95,Magician
+Robe of the Divine Archmage Emperor,Armor,0,330,95,Magician
+Boots of the Divine Archmage Emperor,Boots,0,95,95,Magician
+Sword of the Celestial Paladin,Weapon,750,0,95,Knight
+Full Plate Mail of the Celestial Knight,Armor,0,400,95,Knight
+Helm of the Celestial Paladin,Helmet,0,130,95,Knight
+Longbow of the Master Archer,Weapon,330,0,95,Archer
+Dragon Scale Chestplate,Armor,0,380,95,Archer
+Boots of the Hunter's Dominion,Boots,0,100,95,Archer
+Staff of the Divine Archmage King,Weapon,340,0,100,Magician
+Robe of the Divine Archmage King,Armor,0,350,100,Magician
+Boots of the Divine Archmage King,Boots,0,100,100,Magician
+Sword of the Celestial Lord,Weapon,800,0,100,Knight
+Plate Armor of the Celestial Lord,Armor,0,420,100,Knight
+Helm of the Celestial Lord,Helmet,0,140,100,Knight
+Shortbow of the Master Hunter,Weapon,350,0,100,Archer
+Dragon Scale Leggings,Leggings,0,100,100,Archer
+Boots of the Hunter's Mastery,Boots,0,105,100,Archer
