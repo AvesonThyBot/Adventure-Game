@@ -13,5 +13,5 @@ def calculate_level(xp):
 # Apply function to calculate level for each user
 df['level'] = df['xp'].apply(calculate_level)
 
-# Print updated DataFrame
+# Print updated DataFrame 
 print(df)

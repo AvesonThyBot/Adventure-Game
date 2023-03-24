@@ -23,19 +23,20 @@ Abdullah Amod
 -- people^
 
 
-o-do list:
+To-do list:
 Gantt Chart - Aveson (in progress)
 Test Plan - All. (later)
-Login - Abdulqadir: F & P & C (code needs to be finished) (pseudocode needs changing)
+Login - Abdulqadir: F & P & C (pseudocode needs changing)
 Menu - Abdulqadir: C, Aveson: F & P (finished)
 Rooms - Cole: F & P (going to start)
-Classes - Emmanuel: F, Aveson: P (flowchart needs finishing)
-Leveling - 
+Classes - Emmanuel: F, Aveson: P (finished)
+Leveling - Emmanuel: F, Aveson: P (in progress)
 Leaderboard - Cole: F & P (finished)
 Saving Data & Loading Data - Emmanuel: F, Aveson: P (finished)
 Inventory - 
 Gameplay - 
-Modifying CSVs - Aveson: C (later)
+Equipped - 
+Modifying CSVs - Aveson & Adulqadir (in progress) 
 
 
 Steps:
