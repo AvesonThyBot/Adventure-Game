@@ -26,6 +26,7 @@ def return_login(): #something like this will need to be in every script that wi
 # function for making account
 def create_account(user_data):
   while True:
+    global username
     username = input(f"{spacing}\nPlease enter the username you wish to use: ").strip()
     if username == "":
       print(f"{spacing}\nUsername cannot be empty.")
@@ -41,6 +42,7 @@ def create_account(user_data):
     break
 
   while True:
+    global password
     password = input(f"{spacing}\nPlease create a password. ").strip()
     if not re.match("^\S[a-zA-Z0-9!@#$%^&*()_+}{\":?><;.,';\][=-]{7,}$",password):
       print(f"{spacing}\nPassword must be at least 8 characters, with no spaces, and could include at least special characters.")
@@ -58,7 +60,9 @@ def create_account(user_data):
 #function to log in
 def login(user_data):
   while True:
+    global username
     username = input(f"{spacing}\nPlease enter your username: ").strip()
+    global password
     password = input("Please enter your password: ").strip()
     if user_data[(user_data['username'] == username) & (user_data['password'] == password)].empty:
       print(f"{spacing}\nInvalid username or password. Please try again.")
@@ -70,7 +74,6 @@ def login(user_data):
   user_dict = user_data[user_data['username'] == username].iloc[0].to_dict()
   return user_dict
 
-
 # # mini menu to ask
 
 def login_menu():
@@ -80,19 +83,29 @@ def login_menu():
     if choice == '1':
       user_dict = login(user_data)
       print(f"Login successful!\n{spacing}\n")
+      choice = int(choice)
       return choice
       break
     elif choice == '2':
       user_data = create_account(user_data)
       print(f"Sign Up successful!\n{spacing}")
-      return choice
+      choice = int(choice)
+      return
       break
     elif choice == '3':
       print(f"{spacing}\nReturning to Menu!\n{spacing}")
       from adventure_game import menu
+      choice = int(choice)
       return choice
       break
     else:
       print(f"{spacing}\nInvalid choice. Please try again.")
       continue
 
+
+
+
+def login_data():
+  choice = login_menu()
+  if choice in (1,2):
+    return username,password

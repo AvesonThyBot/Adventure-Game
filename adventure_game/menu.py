@@ -32,7 +32,7 @@ def return_menu():
       break
     else:
       continue
-
+# The return menu checks whether  the game returns back to the menu
 
 #menu login function
 def menu():
@@ -71,5 +71,5 @@ def menu():
       print(f"{spacing}\nInvalid choice. Please try again.\n{spacing}")
       continue
 
-
+# list of inputs and outputs and code directory 
 menu()

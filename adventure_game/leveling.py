@@ -1,17 +1,17 @@
 import pandas as pd
 
-# Read data from CSV file
-df = pd.read_csv('users_information.csv')
+user_info = pd.read_csv("user_details.csv")
+# this is getting the level column specifically
+player_level = user_info["level"]
+player_xp = user_info["experience"]
 
-# Define function to calculate level based on experience points
-def calculate_level(xp):
-    level = 0
-    while xp >= 50 * (level**2) + 50 * level:
-        level += 1
-    return level
+# if they are max level already then they won't be able to level up
+if player_level >= 100:
+  print("You are already max level")
 
-# Apply function to calculate level for each user
-df['level'] = df['xp'].apply(calculate_level)
-
-# Print updated DataFrame 
-print(df)
+# this is for level 1. if they get 100 xp then they level up to level 1
+if player_xp > 100:
+  # adding one onto the csv file so that is saves their level (although it may be incorrect as it as right now)
+  player_level + 1
+  # telling them their level
+  print("You have levelled up! You are now level ", player_level)
