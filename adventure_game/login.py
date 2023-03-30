@@ -6,7 +6,6 @@ user_data = pd.read_csv("adventure_game/data/user_details.csv")
 #variables
 spacing = "---------"
 
-
 def return_login(): #something like this will need to be in every script that will let them return to menu or going back to the code won't work as it finished interpreting the whole code already.
   while True:
     from adventure_game.menu import menu
@@ -20,8 +19,6 @@ def return_login(): #something like this will need to be in every script that wi
       break
     else:
       continue
-
-
 
 # function for making account
 def create_account(user_data):
@@ -106,6 +103,4 @@ def login_menu():
 
 
 def login_data():
-  choice = login_menu()
-  if choice in (1,2):
     return username,password

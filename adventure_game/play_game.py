@@ -7,14 +7,10 @@ u_details = pd.read_csv('adventure_game/data/user_details.csv')
 
 spacing = "---------"
 
-#in progress
-
-#this code is currently broken, it returns nonetype
+#loads data
 from adventure_game.login import login_data
 username,password = login_data()
 user_data = u_details[(u_details['username'] == username) & (u_details['password'] == password)]
-
-
 
 
 
@@ -122,32 +118,7 @@ def game():
   #else :
   #empty_room()
 
-print(user_data)
+
 profession()
 
-# import pandas as pd
-# import random
 
-# def random_row_index(Class, level):
-#     equipment = pd.read_csv("equipment.csv")
-#     filtered_equipment = equipment[(equipment['Class'] == Class) & (equipment['Level'] == level)]
-#     num_rows = len(filtered_equipment)
-#     random_row = random.randint(0, num_rows-1)
-#     selected_row = filtered_equipment.iloc[random_row]
-#     return selected_row
-
-# # Read the existing CSV file with the 'inventory' column
-# inventory_df = pd.read_csv("inventory.csv")
-
-# # Get the random row based on Class and level
-# selected_row = random_row_index("Class_Name", level_number)
-
-# # Append the selected row value to the inventory list
-# inventory_list = inventory_df['inventory'].tolist()
-# inventory_list.append(selected_row.to_dict())
-
-# # Update the 'inventory' column with the new list
-# inventory_df['inventory'] = inventory_list
-
-# # Save the updated DataFrame to the CSV file
-# inventory_df.to_csv("inventory.csv", index=False)
