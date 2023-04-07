@@ -79,27 +79,27 @@ def chest_room():
 
 def profession_info():
   time.sleep(0.5)
-  print(f"\n{spacing}{spacing}{spacing}{spacing}\n1) Knight\n{spacing}Knight Information{spacing}\n• Knight starts with 'Training Sword' and 'Training Shield'.\n• Training Sword stats: \n Attack: 10\n Magic Attack: 0\n• Training Shield:\n Defense: 1\n• Other Stats:\n Health: 200\n Mana: 100\n{spacing}Knight Leveling Perks{spacing}\n• Knight's base attack and defense increases by 10!\n• Knight's health increases by 200 and mana increases by 100!\n{spacing}{spacing}{spacing}{spacing}")
+  print(f"\n{spacing}{spacing}{spacing}{spacing}\n1) Magician\n{spacing}Magician Information{spacing}\n• Magician starts with 'Training Wand' with stats:\n Attack: 0\n Magic Attack: 10\n Defense: 0\n• Other Stats:\n Health: 100\n Mana: 200\n Beginner Spell: 'Wind Strike' (10 mana per cast)\n{spacing}Magician Leveling Perks{spacing}\n• Magician's base magic attack increases by 10!\n• Magician's health increases by 100 and mana increases by 200!\n{spacing}{spacing}{spacing}{spacing}")
   time.sleep(0.5)
-  print(f"2) Magician\n{spacing}Magician Information{spacing}\n• Magician starts with 'Training Wand' with stats:\n Attack: 0\n Magic Attack: 10\n Defense: 0\n• Other Stats:\n Health: 100\n Mana: 200\n Beginner Spell: 'Wind Strike' (10 mana per cast)\n{spacing}Magician Leveling Perks{spacing}\n• Magician's base magic attack increases by 10!\n• Magician's health increases by 100 and mana increases by 200!\n{spacing}{spacing}{spacing}{spacing}")
+  print(f"2) Archer\n{spacing}Archer Information{spacing}\n• Archer starts with 'Training Bow' and 'Training Arrows' with stats:\n Attack: 10\n Magic Attack: 10\n Defense: 0\n• Other Stats:\n Health: 100\n Mana: 100\n Basic Arrow Shot (uses 1 arrow)\n Magic Arrow Shot (uses 1 arrow and 10 mana)\n{spacing}Archer Leveling Perks{spacing}\n• Archer's base attack and magic increase by 10!\n• Archer's health increases by 100 and mana increases by 100!\n{spacing}{spacing}{spacing}{spacing}")
   time.sleep(0.5)
-  print(f"3) Archer\n{spacing}Archer Information{spacing}\n• Archer starts with 'Training Bow' and 'Training Arrows' with stats:\n Attack: 10\n Magic Attack: 10\n Defense: 0\n• Other Stats:\n Health: 100\n Mana: 100\n Basic Arrow Shot (uses 1 arrow)\n Magic Arrow Shot (uses 1 arrow and 10 mana)\n{spacing}Archer Leveling Perks{spacing}\n• Archer's base attack and magic increase by 10!\n• Archer's health increases by 100 and mana increases by 100!\n{spacing}{spacing}{spacing}{spacing}")
+  print(f"3) Knight\n{spacing}Knight Information{spacing}\n• Knight starts with 'Training Sword' and 'Training Shield'.\n• Training Sword stats: \n Attack: 10\n Magic Attack: 0\n• Training Shield:\n Defense: 1\n• Other Stats:\n Health: 200\n Mana: 100\n{spacing}Knight Leveling Perks{spacing}\n• Knight's base attack and defense increases by 10!\n• Knight's health increases by 200 and mana increases by 100!\n{spacing}{spacing}{spacing}{spacing}")
   time.sleep(1)
 def profession():
   while True:
     profession_info()
     profession_choice = input("Pick an Option. ").strip()
-    # line to fetch their info
+    #Needs to add the mana,attack,magic attack,defense and inventory items to the list.
     if profession_choice in ['1', "Magician", "one", "magician"]:
-      u_details.loc[u_details['username'] == username, 'profession'] = 'Magician'
+      u_details.loc[u_details['username'] == username, ['profession','attack','magic_attack', 'defense', 'health','mana']] = ['Magician', 0, 10, 0,100,200]
       u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       break
     elif profession_choice in ['2', "Archer", "two", "archer"]:
-      u_details.loc[u_details['username'] == username, 'profession'] = 'Archer'
+      u_details.loc[u_details['username'] == username, ['profession','attack','magic_attack', 'defense', 'health','mana']] = ['Archer', 10, 0, 1,200,100]
       u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       break
     elif profession_choice in ['3', "Knight", "three", "knight"]:
-      u_details.loc[u_details['username'] == username, 'profession'] = 'Knight'
+      u_details.loc[u_details['username'] == username, ['profession','attack','magic_attack', 'defense', 'health','mana']] = ['Knight', 10, 10, 0,100,100]
       u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       break
     else:
@@ -117,7 +117,7 @@ def room_counter(increment=1):# only write room_counter() to increase the room b
 def game():
   print("Welcome To Adventure Game.\nTo start, pick a profession you will like to be.")
   profession()
-  print(f"{spacing}\nYou will be going through 3 tutorial rooms.\nIn this game there can only be empty room, room containing Chest or room containing monsters!\n{spacing}") #better if we force them into a certain room order, empty -> chest -> fight
+  print(f"{spacing}\nYou will be going through 3 tutorial rooms.\nIn this game there 3 types of rooms:\n• Empty Room\n• Chest Room\n• Monster Room\n{spacing}") #better if we force them into a certain room order, empty -> chest -> fight
   time.sleep(0.5)
   empty_room()
   time.sleep(0.5)

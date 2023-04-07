@@ -1,5 +1,5 @@
 username,password,profession,level,experience,health,mana,attack,magic_attack,defense,inventory,equipped,room,runs
-Aveson,Aveson_123,Magician,0.0,,,,,,,,,3.0,
+Aveson,Aveson_123,Archer,0.0,,200.0,100.0,10.0,0.0,1.0,,,2.0,
 Cole,Leicester1#,,0.0,,,,,,,,,,
 Tester1,Tester_123,,0.0,,,,,,,,,,
 65ty,poplop90?,,0.0,,,,,,,,,,
