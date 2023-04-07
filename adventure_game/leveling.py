@@ -25,10 +25,6 @@ else:
       print("You have reached max level!")
       break
 
-
-
-
-
 # leave this here for now
 def row_to_dict(row):
     monster_dict = {

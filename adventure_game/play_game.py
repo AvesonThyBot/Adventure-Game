@@ -2,8 +2,6 @@ import pandas as pd, random, time
 
 equipment = pd.read_csv('adventure_game/data/equipments.csv')
 u_details = pd.read_csv('adventure_game/data/user_details.csv')
-#print(equipment.Class.loc[equipment['Class'].str.contains("Archer")])
-#randomised_attack = ( attack * 10)
 
 spacing = "---------"
 
@@ -12,32 +10,24 @@ from adventure_game.login import login_data
 username,password = login_data()
 user_data = u_details[(u_details['username'] == username) & (u_details['password'] == password)]
 
-
-
+#main functions 
 def profession():
-
   while True:
     profession_choice = input(
       f"Magician\n{spacing}\nArcher\n{spacing}\nKnight\n{spacing}\nEnter your choice: "
     ).strip()
-
     # line to fetch their info
-
     if profession_choice in ['1', "Magician", "one", "magician"]:
-      new_user = pd.DataFrame({'profession': [profession_choice]})
-      merged_df = u_details.append(new_user, ignore_index=True)
-      merged_df.to_csv("u_details", index=False)
-      #global Class = profession_choice
-
+      u_details.loc[u_details['username'] == username, 'profession'] = 'Magician'
+      u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+      break
     elif profession_choice in ['2', "Archer", "two", "archer"]:
-      new_user = pd.DataFrame({'profession': [profession_choice]})
-      merged_df = u_details.append(new_user, ignore_index=True)
-      merged_df.to_csv("u_details", index=False)
+      u_details.loc[u_details['username'] == username, 'profession'] = 'Archer'
+      u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       break
     elif profession_choice in ['3', "Knight", "three", "knight"]:
-      new_user = pd.DataFrame({'profession': [profession_choice]})
-      merged_df = u_details.append(new_user, ignore_index=True)
-      merged_df.to_csv("u_details", index=False)
+      u_details.loc[u_details['username'] == username, 'profession'] = 'Knight'
+      u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       break
     else:
       print(f"{spacing}\nInvalid choice. Please try again.\n{spacing}")
@@ -62,9 +52,6 @@ def return_menu():
 
 def random_row_index(Class, level):
     level = int(level)
-    equipment = pd.read_csv('equipments.csv')
-    u_details = pd.read_csv('user_details.csv')
-
     filtered_equipment = equipment[(equipment['Class'] == Class) & (equipment['Level'] == level)]
     num_rows = len(filtered_equipment)
 

@@ -1,7 +1,6 @@
 #variable
 spacing = "---------"
 
-
 #function to call certain files as importing it may cause errors.
 def login():
   from adventure_game import login
