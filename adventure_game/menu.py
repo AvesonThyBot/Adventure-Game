@@ -1,23 +1,15 @@
-#variable
+# Variable
 spacing = "---------"
-
-#function to call certain files as importing it may cause errors.
+# -------------------- Function to import files
 def login():
   from adventure_game import login
-
-
 def leaderboard():
   from adventure_game import leaderboard
-
-
 def load_game():
   from adventure_game import load_game
-
-
 def play_game():
   from adventure_game import play_game
-
-
+# -------------------- Return to Menu function --------------------
 def return_menu():
   while True:
     from adventure_game.login import login_menu
@@ -30,10 +22,8 @@ def return_menu():
     elif choice in (1, 2, 3):
       break
     else:
-      continue
-# The return menu checks whether  the game returns back to the menu
-
-#menu login function
+      continue # The return menu checks whether  the game returns back to the menu
+# -------------------- Menu function --------------------
 def menu():
   print(f"Welcome to the Adventure Game!\n{spacing}")
   while True:
@@ -69,6 +59,4 @@ def menu():
     else:
       print(f"{spacing}\nInvalid choice. Please try again.\n{spacing}")
       continue
-
-# list of inputs and outputs and code directory 
 menu()

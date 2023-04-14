@@ -1,12 +1,10 @@
+# -------------------- Imports and csv reading --------------------
 import pandas as pd, re, time
-
-# read in user details from CSV
 user_data = pd.read_csv("adventure_game/data/user_details.csv")
-
-#variables
+# Variables
 spacing = "---------"
-
-def return_login(): #something like this will need to be in every script that will let them return to menu or going back to the code won't work as it finished interpreting the whole code already.
+# -------------------- Return to Login function --------------------
+def return_login():
   while True:
     from adventure_game.menu import menu
     choice = menu()
@@ -19,8 +17,7 @@ def return_login(): #something like this will need to be in every script that wi
       break
     else:
       continue
-
-# function for making account
+# -------------------- Create Account --------------------
 def create_account(user_data):
   while True:
     global username
@@ -48,13 +45,11 @@ def create_account(user_data):
       print(f"{spacing}\nSigning Up...\n{spacing}")
       break
   
-  new_user = pd.DataFrame({'username': [username], 'password': [password], 'level': 0})
+  new_user = pd.DataFrame({'username': [username], 'password': [password]})
   user_data = pd.concat([user_data, new_user])
   user_data.to_csv("adventure_game/data/user_details.csv", index=False)
   return user_data
-
-
-#function to log in
+# -------------------- Login to Account --------------------
 def login(user_data):
   while True:
     global username
@@ -70,16 +65,14 @@ def login(user_data):
     break
   user_dict = user_data[user_data['username'] == username].iloc[0].to_dict()
   return user_dict
-
-# # mini menu to ask
-
+# -------------------- Login Menu Function --------------------
 def login_menu():
   global user_data
   while True:
     choice = input(f"{spacing}\nWhat do you want to do?\n{spacing}\n1.Log in\n2.Create a new account\n3.Return to Menu\n{spacing}\nEnter your choice: ").strip()
     if choice == '1':
       user_dict = login(user_data)
-      print(f"Login successful!\n{spacing}\n")
+      print(f"Login successful!\n{spacing}")
       choice = int(choice)
       return choice
       break
@@ -98,9 +91,6 @@ def login_menu():
     else:
       print(f"{spacing}\nInvalid choice. Please try again.")
       continue
-
-
-
-
+# -------------------- Function to save login data --------------------
 def login_data():
     return username,password
