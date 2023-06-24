@@ -18,7 +18,7 @@ def return_menu():
       continue
     choice = int(choice)
     if choice == 3:
-      menu()
+      from adventure_game.login import menu
     elif choice in (1, 2):
       break
     else:
