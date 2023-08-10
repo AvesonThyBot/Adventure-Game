@@ -160,3 +160,12 @@ def game():
     inventory_updater() #updates inventory to csv after room is complete.
 game()
 
+""" 
+TO DO:
+finish room_menu
+do design for room_menu
+fix room_menu for each room type
+fix random_row_indexer
+add equipped function code
+fix bug at profession info
+"""
