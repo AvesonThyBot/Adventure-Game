@@ -164,9 +164,8 @@ game()
 
 """ 
 TO DO:
-finish room_menu
+create room_menu
 do design for room_menu
 fix room_menu for each room type
 fix random_row_indexer
-add equipped function code
 """
