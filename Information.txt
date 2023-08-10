@@ -14,11 +14,11 @@ P - Pseudocode
 C - Code
 
 -- Activities^
-Aveson Carvalho
-Abdulqadir Mohamedali
-Cole Rudkin
-Oluwasanmi Emmanuel Bodunwa
-Abdullah Amod
+Aveson (Main programmer and Project leader)
+Abdulqadir (Second programmer)
+Cole (Left group)
+Emmanuel (Kicked for lack of effort and zero coding)
+Abdullah (Third programmer)
 
 -- people^
 
@@ -28,14 +28,14 @@ Gantt Chart - Aveson (in progress)
 Test Plan - All. (later)
 Login - Abdulqadir: F & P & C (pseudocode needs changing)
 Menu - Abdulqadir: C, Aveson: F & P (finished)
-Rooms - Cole: F & P (going to start)
+Rooms - Cole: F & P (going to start) #Going to be given to Aveson
 Classes - Emmanuel: F, Aveson: P (finished)
 Leveling - Emmanuel: F, Aveson: P (in progress)
 Leaderboard - Cole: F & P (finished)
 Saving Data & Loading Data - Emmanuel: F, Aveson: P (finished)
-Inventory - 
-Gameplay - 
-Equipped - 
+Inventory - Aveson: F & P & C (Only code needs to be done)
+Gameplay - Aveson: F & P & C (Only code needs to be done)
+Equipped - Aveson: F & P & C (Only code needs to be done)
 Modifying CSVs - Aveson & Adulqadir (in progress) 
 
 

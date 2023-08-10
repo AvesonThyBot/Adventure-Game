@@ -1,3 +1,2 @@
-#from adventure_game import login
+# For testing purposes, replit doesn't allow running any other files but main.
 from adventure_game import menu
-#from adventure_game import play_game
