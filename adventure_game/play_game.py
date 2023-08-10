@@ -42,6 +42,16 @@ def random_row_index(Class, level):
     u_details.to_csv('user_details.csv', index=False)
 
     print(selected_row)
+# -------------------- Inventory & Equipped Item function --------------------
+inventory = [] #stores the inventory temporarily 
+def inventory_updater(): #updates inventory on csv
+  formatted_inventory = ','.join(str(item) for item in inventory)
+  formatted_inventory = formatted_inventory
+  print(formatted_inventory)
+  u_details.loc[u_details['username'] == username, ['inventory']] = formatted_inventory
+  u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+def equipped(): #currently equipped item
+  pass
 # -------------------- Rooms function --------------------
 def room_counter(increment=1):# only write room_counter() to increase the room by 1, write room_counter(x) (x being number above 1) to add more than 1 room
     global room_count
@@ -131,18 +141,22 @@ def game():
   print(f"{spacing}\nFirst Tutorial room.")
   time.sleep(1)
   empty_room()
+  inventory_updater() #updates inventory to csv after room is complete.
   time.sleep(1)
   print(f"{spacing}\nSecond Tutorial room.")
   time.sleep(1)
   chest_room()
+  inventory_updater() #updates inventory to csv after room is complete.
   time.sleep(1)
   print(f"{spacing}\nThird Tutorial room.")
   time.sleep(1)
   monster_room()
+  inventory_updater() #updates inventory to csv after room is complete.
   time.sleep(1)
   print(f"{spacing}\nThis is the end of the tutorial. You now have the ability to leave/exit the game after beating a room.")
   while True:
     time.sleep(1)
     random_room()
+    inventory_updater() #updates inventory to csv after room is complete.
 game()
 
