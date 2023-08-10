@@ -38,26 +38,15 @@ Gameplay - Aveson: F & P & C (Only code needs to be done)
 Equipped - Aveson: F & P & C (Only code needs to be done)
 Modifying CSVs - Aveson & Adulqadir (in progress) 
 
-
 Steps:
 •Create a main menu function that displays the options to start a new game, load a game, or view high scores.
-
 •Create a function to load a saved game with the user's stats. The user needs to enter their username and password, and the stats will be loaded into a data structure with the correct index name as the stat type.
-
 •Create a function to view high scores that displays the top ten players in the game, sorted by their levels.
-
 •Create a game function that asks the user for their username, password, and profession from a predetermined list.
-
 •Depending on the profession chosen, the user will start with specific equipment and stats.
-
 •The game will prompt the user if they are ready to start the adventure, and once they confirm, they will go through doors and fight random monsters.
-
 The user will have a chance to get a chest with a random item (either equipment, potions, or a new magic spell for magic-users only).
-
 •Each equipment item will give the player a boost to their stats that will be randomly generated.
-
 •The user will gain experience points for every monster they defeat, and they will level up based on the amount of experience gained.
-
 •Each time the user levels up, their base stats will increase based on their class.
-
 •The user's stats will be saved locally to a CSV file when they try to exit the game.
