@@ -50,8 +50,8 @@ def inventory_updater(): #updates inventory on csv
   print(formatted_inventory)
   u_details.loc[u_details['username'] == username, ['inventory']] = formatted_inventory
   u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
-def equipped(): #currently equipped item
-  pass
+def equipped(x): #currently equipped item
+  return inventory[x]
 # -------------------- Rooms function --------------------
 def room_counter(increment=1):# only write room_counter() to increase the room by 1, write room_counter(x) (x being number above 1) to add more than 1 room
     global room_count
@@ -105,13 +105,15 @@ def profession_info():
 def profession():
   while True:
     profession_info_choice = input(f"{spacing}\nDo you want to check profession information and perks? (Yes or No): ").strip()
-    if profession_info_choice.lower() in [1,"yes","yea","one","sure","ye"]:
+    if profession_info_choice.lower() in [1,"yes","yea","one","sure","ye","y"]:
       profession_info()
-    elif profession_info_choice.lower() in [2,"no","nah","two","na"]:
+      break
+    elif profession_info_choice.lower() in [2,"no","nah","two","na","n"]:
       print(spacing)
-      continue
-    elif profession_info_choice.lower() not in [1,"yes","yea","one","sure",2,"no","nah","two","na"]:
+      break
+    else:
       profession()
+  while True:
     profession_choice = input(f"Pick an Option.\n• Magician (1)\n• Archer (2)\n• Knight (3)\n{spacing}\nEnter your choice: ").strip()
     #Needs to add inventory items to the list.
     if profession_choice in ['1', "Magician", "one", "magician","1.0",1,1.0]:
@@ -167,5 +169,4 @@ do design for room_menu
 fix room_menu for each room type
 fix random_row_indexer
 add equipped function code
-fix bug at profession info
 """
