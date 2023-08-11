@@ -47,11 +47,41 @@ inventory = [] #stores the inventory temporarily
 def inventory_updater(): #updates inventory on csv
   formatted_inventory = ','.join(str(item) for item in inventory)
   formatted_inventory = formatted_inventory
-  print(formatted_inventory)
   u_details.loc[u_details['username'] == username, ['inventory']] = formatted_inventory
   u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
 def equipped(x): #currently equipped item
   return inventory[x]
+# -------------------- Room options function --------------------
+def empty_options():
+  print(f"""\
+------- Empty Room Options -------
+1) Proceed to room {room_count + 1}.
+2) Check Inventory.
+3) Back to menu.
+4) Save & Quit Game.
+----------------------------------""")
+def chest_options():
+  print(f"""\
+------- Chest Room Options -------
+1) Open chest
+2) Check Inventory.
+3) Proceed to room {room_count+1}
+4) Back to menu.
+5) Save & Quit Game.
+----------------------------------""")
+  pass
+def monster_options():
+  print(f"""\
+------- Monster Room Options -------
+1) Fight monster.
+2) Check Inventory.
+3) Back to menu.
+4) Save & Quit Game.
+----------------------------------""")
+  pass
+# -------------------- Monster gameplay function --------------------
+def monster_fight():
+  pass
 # -------------------- Rooms function --------------------
 def room_counter(increment=1):# only write room_counter() to increase the room by 1, write room_counter(x) (x being number above 1) to add more than 1 room
     global room_count
@@ -61,21 +91,14 @@ def room_counter(increment=1):# only write room_counter() to increase the room b
     u_details.loc[u_details['username'] == username, 'room'] = room_count
     u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
     return room_count
-def monster_room():
+def empty_room(): #main controlling function for empty rooms
   room_count = room_counter()#updates room counter
-  print(f"{spacing}\nThis is a monster room! Room number: {room_count}!")
-  if room_count in [3.0,3,"3","3.0"]: #tutorial stage
-    print("monster tutorial")
-  elif room_count> 3 or room_count > 3.0:#normal room stages
-    print("normal")
-def empty_room():
-  room_count = room_counter()#updates room counter
-  print(f"{spacing}\nThis room is empty! Room number: {room_count}!")
+  print(f"{spacing}\nThis room is empty! Room number: {room_count}.")
   if room_count in [1.0,1,"1","1.0"]: #tutorial stage
     print(f"{spacing}\nThis room has nothing at all. Just a empty room..")
-def chest_room():
+def chest_room(): #main controlling function for chest rooms
   room_count = room_counter()#updates room counter
-  print(f"{spacing}\nThis is a chest room! Room number: {room_count}!")
+  print(f"{spacing}\nThis is a chest room! Room number: {room_count}.")
   if room_count in [2.0,2,"2","2.0"]: #tutorial stage
     print("chest tutorial")
   elif room_count> 2 or room_count > 1.0:#normal room stages
@@ -85,6 +108,13 @@ def chest_room():
       profession = u_details.loc[u_details['username']==username, 'profession'].values[0]
       level = u_details.loc[u_details['username']==username, 'level'].values[0]
       random_row_index(f"{profession}",f"{level}")
+def monster_room(): #main controlling function for monster rooms
+  room_count = room_counter()#updates room counter
+  print(f"{spacing}\nThis is a monster room! Room number: {room_count}.")
+  if room_count in [3.0,3,"3","3.0"]: #tutorial stage
+    print("monster tutorial")
+  elif room_count> 3 or room_count > 3.0:#normal room stages
+    print("normal")
 def random_room(): #function to call a random room from the 3
   room_num = random.randint(1, 3)
   if room_num == 1:
@@ -142,21 +172,21 @@ def game():
   time.sleep(1)
   print(f"{spacing}\nFirst Tutorial room.")
   time.sleep(1)
-  empty_room()
+  empty_room() #sends player to empty room (tutorial)
   inventory_updater() #updates inventory to csv after room is complete.
   time.sleep(1)
   print(f"{spacing}\nSecond Tutorial room.")
   time.sleep(1)
-  chest_room()
+  chest_room() #sends player to chest room (tutorial)
   inventory_updater() #updates inventory to csv after room is complete.
   time.sleep(1)
   print(f"{spacing}\nThird Tutorial room.")
   time.sleep(1)
-  monster_room()
+  monster_room() #sends player to monster room (tutorial)
   inventory_updater() #updates inventory to csv after room is complete.
   time.sleep(1)
-  print(f"{spacing}\nThis is the end of the tutorial. You now have the ability to leave/exit the game after beating a room.")
-  while True:
+  print(f"{spacing}\nThis is the end of the tutorial. You now have the ability to exit the game moving forward.")
+  while True: #infinitvely goes on until there is a breaking point
     time.sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
@@ -168,4 +198,29 @@ create room_menu
 do design for room_menu
 fix room_menu for each room type
 fix random_row_indexer
+"""
+
+""" Room menu option template
+Empty:
+------- Empty Room Options -------
+1) Proceed to room {room_count+1}.
+2) Check Inventory.
+3) Back to menu.
+4) Save & Quit Game.
+----------------------------------
+Chest:
+------- Chest Room Options -------
+1) Open chest
+2) Check Inventory.
+3) Proceed to room {room_count+1}
+4) Back to menu.
+5) Save & Quit Game.
+----------------------------------
+Monster:
+------- Monster Room Options -------
+1) Fight monster.
+2) Check Inventory.
+3) Back to menu.
+4) Save & Quit Game.
+----------------------------------
 """
