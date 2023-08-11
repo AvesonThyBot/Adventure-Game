@@ -43,10 +43,10 @@ def random_row_index(Class, level): #random chest drop
     selected_row = filtered_equipment.iloc[random_row]
 
     name = selected_row['Name']
-    inventory_list_str = u_details.loc[u_details['username'] == user_data, 'inventory'].tolist()[0]
+    inventory_list_str = u_details.loc[u_details['username'] == username, 'inventory'].tolist()[0]
     inventory_list = [item.strip() for item in inventory_list_str.split(',')]
     inventory_list.append(name)
-    u_details.loc[u_details['username'] == user_data, 'inventory'] = [', '.join(inventory_list)]
+    u_details.loc[u_details['username'] == username, 'inventory'] = [', '.join(inventory_list)]
     u_details.to_csv('user_details.csv', index=False)
 
     print(selected_row)
