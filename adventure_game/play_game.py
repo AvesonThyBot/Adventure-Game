@@ -1,15 +1,23 @@
 # -------------------- Imports and read_csv --------------------
-import pandas as pd, random, time
-equipment = pd.read_csv('adventure_game/data/equipments.csv')
-u_details = pd.read_csv('adventure_game/data/user_details.csv')
-spacing = "---------"
+try:
+  import pandas as pd, random, time
+  equipment = pd.read_csv('adventure_game/data/equipments.csv')
+  u_details = pd.read_csv('adventure_game/data/user_details.csv')
+  spacing = "---------"
+except Exception as error:
+  print(f"There was an {error}. Stopping program.")
+  time.sleep(3)
+  print("Exiting...")
+  exit()
 # --------------------  Loads data --------------------
 from adventure_game.login import login_data
-global username,password
-username,password = login_data()
-user_data = u_details[(u_details['username'] == username) & (u_details['password'] == password)]
+global username
+username = login_data()
+username = u_details[(u_details['username'] == username)]
 # -------------------- All functions under --------------------
-def return_menu():
+def exit_menu(room): #menu to show if they want to exit.
+  pass
+def return_menu(room): #menu to show if they want to return to menu
   #leave this for now (needs to be changed for this part of code)
   while True:
     from adventure_game.login import login_menu
@@ -23,7 +31,7 @@ def return_menu():
       break
     else:
       continue
-def random_row_index(Class, level):
+def random_row_index(Class, level): #random chest drop
     level = int(level)
     filtered_equipment = equipment[(equipment['Class'] == Class) & (equipment['Level'] <= level + 3)]
     num_rows = len(filtered_equipment)
@@ -52,15 +60,37 @@ def inventory_updater(): #updates inventory on csv
 def equipped(x): #currently equipped item
   return inventory[x]
 # -------------------- Room options function --------------------
-def empty_options():
-  print(f"""\
+def empty_options(): #option list for empty rooms.
+  option_choice = input(f"""\
 ------- Empty Room Options -------
 1) Proceed to room {room_count + 1}.
 2) Check Inventory.
 3) Back to menu.
 4) Save & Quit Game.
-----------------------------------""")
-def chest_options():
+----------------------------------
+""")
+  try:
+    option_choice = int(option_choice)
+    if option_choice == 1:
+      return
+    elif option_choice == 2:
+      print(inventory)
+    elif option_choice == 3:
+      return_menu("empty")
+      return
+    elif option_choice == 4:
+      exit_menu("empty")
+      return
+    else:
+      print(f"{spacing*4}\nInvalid option. Must be 1-4.")
+      empty_options()
+  except ValueError:
+    print("Invalid Value Type. Input must be integer between 1-4.")
+    empty_options()
+  except Exception:
+    print("Input must be integer between 1-4.")
+    empty_options()
+def chest_options(): #option list for chest rooms.
   print(f"""\
 ------- Chest Room Options -------
 1) Open chest
@@ -69,8 +99,7 @@ def chest_options():
 4) Back to menu.
 5) Save & Quit Game.
 ----------------------------------""")
-  pass
-def monster_options():
+def monster_options(): #option list for monster rooms.
   print(f"""\
 ------- Monster Room Options -------
 1) Fight monster.
@@ -78,9 +107,8 @@ def monster_options():
 3) Back to menu.
 4) Save & Quit Game.
 ----------------------------------""")
-  pass
 # -------------------- Monster gameplay function --------------------
-def monster_fight():
+def monster_fight(): #monster fight options
   pass
 # -------------------- Rooms function --------------------
 def room_counter(increment=1):# only write room_counter() to increase the room by 1, write room_counter(x) (x being number above 1) to add more than 1 room
@@ -93,14 +121,18 @@ def room_counter(increment=1):# only write room_counter() to increase the room b
     return room_count
 def empty_room(): #main controlling function for empty rooms
   room_count = room_counter()#updates room counter
-  print(f"{spacing}\nThis room is empty! Room number: {room_count}.")
   if room_count in [1.0,1,"1","1.0"]: #tutorial stage
-    print(f"{spacing}\nThis room has nothing at all. Just a empty room..")
+    print(f"{spacing}\nThis room has nothing at all. Just a empty room...")
+    empty_options()
+  elif room_count > 3 or room_count> 3.0: #normal stages
+    print(f"{spacing}\nThis room is empty! Room number: {room_count}.")
+    empty_options()
 def chest_room(): #main controlling function for chest rooms
   room_count = room_counter()#updates room counter
   print(f"{spacing}\nThis is a chest room! Room number: {room_count}.")
   if room_count in [2.0,2,"2","2.0"]: #tutorial stage
     print("chest tutorial")
+    chest_options()
   elif room_count> 2 or room_count > 1.0:#normal room stages
     print("You open the chest")
     r_open = random.randint(0, 3)
@@ -108,13 +140,16 @@ def chest_room(): #main controlling function for chest rooms
       profession = u_details.loc[u_details['username']==username, 'profession'].values[0]
       level = u_details.loc[u_details['username']==username, 'level'].values[0]
       random_row_index(f"{profession}",f"{level}")
+    chest_options()
 def monster_room(): #main controlling function for monster rooms
   room_count = room_counter()#updates room counter
   print(f"{spacing}\nThis is a monster room! Room number: {room_count}.")
   if room_count in [3.0,3,"3","3.0"]: #tutorial stage
     print("monster tutorial")
+    monster_options()
   elif room_count> 3 or room_count > 3.0:#normal room stages
     print("normal")
+    monster_options()
 def random_room(): #function to call a random room from the 3
   room_num = random.randint(1, 3)
   if room_num == 1:
@@ -124,7 +159,7 @@ def random_room(): #function to call a random room from the 3
   else:
     monster_room()
 # -------------------- Profession function --------------------
-def profession_info():
+def profession_info(): #gives them information of professions
   time.sleep(1)
   print(f"{spacing}{spacing}{spacing}{spacing}\n1) Magician\n{spacing}Magician Information{spacing}\n• Magician starts with 'Training Wand' with stats:\n Attack: 0\n Magic Attack: 10\n Defense: 0\n• Other Stats:\n Health: 100\n Mana: 200\n Beginner Spell: 'Wind Strike' (10 mana per cast)\n{spacing}Magician Leveling Perks{spacing}\n• Magician's base magic attack increases by 10!\n• Magician's health increases by 100 and mana increases by 200!\n{spacing}{spacing}{spacing}{spacing}")
   time.sleep(1)
@@ -132,7 +167,7 @@ def profession_info():
   time.sleep(1)
   print(f"3) Knight\n{spacing}Knight Information{spacing}\n• Knight starts with 'Training Sword' and 'Training Shield'.\n• Training Sword stats: \n Attack: 10\n Magic Attack: 0\n• Training Shield:\n Defense: 1\n• Other Stats:\n Health: 200\n Mana: 100\n{spacing}Knight Leveling Perks{spacing}\n• Knight's base attack and defense increases by 10!\n• Knight's health increases by 200 and mana increases by 100!\n{spacing}{spacing}{spacing}{spacing}")
   time.sleep(1)
-def profession():
+def profession(): #main professional handling function
   while True:
     profession_info_choice = input(f"{spacing}\nDo you want to check profession information and perks? (Yes or No): ").strip()
     if profession_info_choice.lower() in [1,"yes","yea","one","sure","ye","y"]:
@@ -165,7 +200,7 @@ def profession():
       print(f"{spacing}\nInvalid choice. Please try again.\n{spacing}")
       continue  
 # -------------------- Main Game function --------------------
-def game():
+def game(): #main game controlling function
   print("Welcome To Adventure Game.\nTo start, pick a profession you will like to be.")
   profession()
   print(f"{spacing}\nYou will be going through 3 tutorial rooms.\nIn this game there 3 types of rooms:\n• Empty Room\n• Chest Room\n• Monster Room")
@@ -190,8 +225,8 @@ def game():
     time.sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
-game()
-
+game() #Run the game
+# -------------------- Extra things --------------------
 """ 
 TO DO:
 create room_menu

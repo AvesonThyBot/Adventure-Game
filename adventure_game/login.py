@@ -93,4 +93,4 @@ def login_menu():
       continue
 # -------------------- Function to save login data --------------------
 def login_data():
-    return username,password
+    return username
