@@ -4,19 +4,19 @@ user_data = pd.read_csv("adventure_game/data/user_details.csv")
 # Variables
 spacing = "---------"
 # -------------------- Return to Login function --------------------
-def return_login(): #return to login 
-  while True:
-    from adventure_game.menu import menu
-    choice = menu()
-    choice = int(choice)
-    if choice is None:
-      continue
-    elif choice in (1,2):
-      login_menu()
-    elif choice == 3:
-      break
-    else:
-      continue
+# def return_login(): #return to login 
+#   while True:
+#     import main
+#     choice = menu()
+#     choice = int(choice)
+#     if choice is None:
+#       continue
+#     elif choice in (1,2):
+#       login_menu()
+#     elif choice == 3:
+#       break
+#     else:
+#       continue
 # -------------------- Create Account --------------------
 def create_account(user_data): #main account creation system
   while True:
