@@ -242,7 +242,7 @@ def profession(): #main professional handling function
       continue  
 # -------------------- Main Game function --------------------
 def game(): #main game controlling function
-  print(f"Hello!\n{spacing}\nTo start, pick a profession you will like to be.")
+  print(f"Hello {username}!\n{spacing}\nTo start, pick a profession you will like to be.")
   profession()
   print(f"{spacing}\nYou will be going through 3 tutorial rooms.\nIn this game there 3 types of rooms:\n• Empty Room\n• Chest Room\n• Monster Room")
   time.sleep(1)
@@ -273,7 +273,5 @@ game() #Run the game
 fix random_row_indexer
 add inventory system
 add giving correct items when profession chosen
-fix bug at sign up in login
-update return_menu
 remove equipped function and update it to be the inventory UI
 """
