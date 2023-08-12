@@ -13,7 +13,7 @@ except Exception as error:
 from adventure_game.login import login_data
 global username
 username = login_data()
-username = u_details[(u_details['username'] == username)]
+userdata = u_details[(u_details['username'] == username)]
 # -------------------- All functions under --------------------
 def exit_menu(room): #menu to show if they want to exit.
   pass
@@ -43,10 +43,10 @@ def random_row_index(Class, level): #random chest drop
     selected_row = filtered_equipment.iloc[random_row]
 
     name = selected_row['Name']
-    inventory_list_str = u_details.loc[u_details['username'] == username, 'inventory'].tolist()[0]
+    inventory_list_str = u_details.loc[u_details['username'] == userdata, 'inventory'].tolist()[0]
     inventory_list = [item.strip() for item in inventory_list_str.split(',')]
     inventory_list.append(name)
-    u_details.loc[u_details['username'] == username, 'inventory'] = [', '.join(inventory_list)]
+    u_details.loc[u_details['username'] == userdata, 'inventory'] = [', '.join(inventory_list)]
     u_details.to_csv('user_details.csv', index=False)
 
     print(selected_row)
@@ -75,6 +75,7 @@ def empty_options(): #option list for empty rooms.
       return
     elif option_choice == 2:
       print(inventory)
+      empty_options()
     elif option_choice == 3:
       return_menu("empty")
       return
@@ -91,22 +92,70 @@ def empty_options(): #option list for empty rooms.
     print("Input must be integer between 1-4.")
     empty_options()
 def chest_options(): #option list for chest rooms.
-  print(f"""\
+  option_choice = input(f"""\
 ------- Chest Room Options -------
 1) Open chest
 2) Check Inventory.
 3) Proceed to room {room_count+1}
 4) Back to menu.
 5) Save & Quit Game.
-----------------------------------""")
+----------------------------------
+""")
+  try:
+    option_choice = int(option_choice)
+    if option_choice == 1:
+      return "open"
+    elif option_choice == 2:
+      print(inventory)
+      chest_options()
+    elif option_choice == 3:
+      return "proceed"
+    elif option_choice == 4:
+      return_menu("empty")
+      return
+    elif option_choice == 5:
+      exit_menu("empty")
+      return
+    else:
+      print(f"{spacing*4}\nInvalid option. Must be 1-4.")
+      chest_options()
+  except ValueError:
+    print("Invalid Value Type. Input must be integer between 1-4.")
+    chest_options()
+  except Exception:
+    print("Input must be integer between 1-4.")
+    chest_options()
 def monster_options(): #option list for monster rooms.
-  print(f"""\
+  option_choice = input(f"""\
 ------- Monster Room Options -------
 1) Fight monster.
 2) Check Inventory.
 3) Back to menu.
 4) Save & Quit Game.
-----------------------------------""")
+----------------------------------
+""")
+  try:
+    option_choice = int(option_choice)
+    if option_choice == 1:
+      return
+    elif option_choice == 2:
+      print(inventory)
+      monster_options()
+    elif option_choice == 3:
+      return_menu("empty")
+      return
+    elif option_choice == 4:
+      exit_menu("empty")
+      return
+    else:
+      print(f"{spacing*4}\nInvalid option. Must be 1-4.")
+      monster_options()
+  except ValueError:
+    print("Invalid Value Type. Input must be integer between 1-4.")
+    monster_options()
+  except Exception:
+    print("Input must be integer between 1-4.")
+    monster_options()
 # -------------------- Monster gameplay function --------------------
 def monster_fight(): #monster fight options
   pass
@@ -123,7 +172,6 @@ def empty_room(): #main controlling function for empty rooms
   room_count = room_counter()#updates room counter
   if room_count in [1.0,1,"1","1.0"]: #tutorial stage
     print(f"{spacing}\nThis room has nothing at all. Just a empty room...")
-    empty_options()
   elif room_count > 3 or room_count> 3.0: #normal stages
     print(f"{spacing}\nThis room is empty! Room number: {room_count}.")
     empty_options()
@@ -132,28 +180,31 @@ def chest_room(): #main controlling function for chest rooms
   print(f"{spacing}\nThis is a chest room! Room number: {room_count}.")
   if room_count in [2.0,2,"2","2.0"]: #tutorial stage
     print("chest tutorial")
-    chest_options()
   elif room_count> 2 or room_count > 1.0:#normal room stages
-    print("You open the chest")
-    r_open = random.randint(0, 3)
-    if r_open == 1:
-      profession = u_details.loc[u_details['username']==username, 'profession'].values[0]
-      level = u_details.loc[u_details['username']==username, 'level'].values[0]
-      random_row_index(f"{profession}",f"{level}")
-    chest_options()
+    return_option = chest_options()
+    if return_option == "open":
+      print("You open the chest")
+      r_open = random.randint(0, 3)
+      if r_open == 1:
+        profession = u_details.loc[u_details['username']==username, 'profession'].values[0]
+        level = u_details.loc[u_details['username']==username, 'level'].values[0]
+        random_row_index(f"{profession}",f"{level}")
+    elif return_option == "proceed":
+      pass
+    else:
+      chest_room()
 def monster_room(): #main controlling function for monster rooms
   room_count = room_counter()#updates room counter
   print(f"{spacing}\nThis is a monster room! Room number: {room_count}.")
   if room_count in [3.0,3,"3","3.0"]: #tutorial stage
     print("monster tutorial")
-    monster_options()
   elif room_count> 3 or room_count > 3.0:#normal room stages
     print("normal")
     monster_options()
 def random_room(): #function to call a random room from the 3
   room_num = random.randint(1, 3)
   if room_num == 1:
-    empty_room() 
+    empty_room()
   elif room_num == 2:
     chest_room()
   else:
@@ -227,8 +278,7 @@ def game(): #main game controlling function
     inventory_updater() #updates inventory to csv after room is complete.
 game() #Run the game
 # -------------------- Extra things --------------------
-""" 
-TO DO:
+""" TO DO:
 create room_menu
 do design for room_menu
 fix room_menu for each room type
