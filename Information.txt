@@ -1,3 +1,4 @@
+-- Activities:
 Activity 1 - Gantt Chart
 Activity 2 - Flow Charts
 Activity 3 - Pseudocode
@@ -8,22 +9,21 @@ Additional files:
 data - has all 3 csv files.
 Scenario Brief - the word document that has all the information.
 
-Key:
+-- Key:
 F - Flow Chart
 P - Pseudocode
 C - Code
 
--- Activities^
+-- People:
 Aveson (Main programmer and Project leader)
 Abdulqadir (Second programmer)
 Cole (Left group)
 Emmanuel (Kicked for lack of effort and zero coding)
 Abdullah (Third programmer)
 
--- people^
 
 
-To-do list:
+-- Activity list:
 Gantt Chart - Aveson (in progress)
 Test Plan - All. (later)
 Login - Abdulqadir: F & P & C (pseudocode needs changing)
@@ -37,6 +37,7 @@ Inventory - Aveson: F & P & C (Only code needs to be done)
 Gameplay - Aveson: F & P & C (Only code needs to be done)
 Equipped - Aveson: F & P & C (Only code needs to be done)
 Modifying CSVs - Aveson & Adulqadir (in progress) 
+player.txt - Aveson: C
 
 Steps:
 •Create a main menu function that displays the options to start a new game, load a game, or view high scores.

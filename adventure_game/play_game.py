@@ -10,8 +10,9 @@ except Exception as error: #error message
   print("Exiting...")
   exit()
 # --------------------  Loads data --------------------
-from main import username
-print(username)
+with open("adventure_game/data/player.txt", "r") as file:
+  global username
+  username = file.read().strip().split()[0]
 userdata = u_details[(u_details['username'] == username)]
 # -------------------- All functions under --------------------
 def exit_menu(): #menu to show if they want to exit.
@@ -241,7 +242,7 @@ def profession(): #main professional handling function
       continue  
 # -------------------- Main Game function --------------------
 def game(): #main game controlling function
-  print("Hello!\n{spacing}\nTo start, pick a profession you will like to be.")
+  print(f"Hello!\n{spacing}\nTo start, pick a profession you will like to be.")
   profession()
   print(f"{spacing}\nYou will be going through 3 tutorial rooms.\nIn this game there 3 types of rooms:\n• Empty Room\n• Chest Room\n• Monster Room")
   time.sleep(1)

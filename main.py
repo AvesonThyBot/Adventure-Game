@@ -1,5 +1,4 @@
-# -------------------- Menu code --------------------
-# -------------------- Imports and variable --------------------
+# [ -------------------- Imports and variables -------------------- ]
 try: #try except for imports
     import time, pandas as pd, re
     spacing = "---------" #variable for design
@@ -10,15 +9,11 @@ except Exception as error: #error message
   time.sleep(3)
   print("Exiting...")
   exit()
-# -------------------- Function to import files --------------------
-def leaderboard(): #leaderboard.py
-  from adventure_game import leaderboard
-def load_game(): #load_game.py
-  from adventure_game import load_game
-def play_game(): #play_game.py
-  from adventure_game import play_game
-# -------------------- Account Login/Sign Up --------------------
-# -------------------- Create Account --------------------
+# [ -------------------- End of Imports and variables -------------------- ]
+
+
+# [ -------------------- Account Login/Sign Up Code -------------------- ]
+# -------------------- Create Account Function --------------------
 def create_account(user_data): #main account creation system
   while True:
     global username
@@ -46,19 +41,20 @@ def create_account(user_data): #main account creation system
   new_user = pd.DataFrame({'username': [username], 'password': [password]})
   user_data = pd.concat([user_data, new_user])
   user_data.to_csv("adventure_game/data/user_details.csv", index=False)
-# -------------------- Login to Account --------------------
+  player_updater(username)
+# -------------------- Login to Account Function --------------------
 def login(user_data): #main login system
-  while True:
-    global username
-    username = input(f"{spacing}\nPlease enter your username: ").strip()
-    password = input("Please enter your password: ").strip()
-    if user_data[(user_data['username'] == username) & (user_data['password'] == password)].empty:
-      print(f"{spacing}\nInvalid username or password. Please try again.")
-      continue
-    else:
-      print(
-        f"{spacing}\nCorrect username and password.\nLogging In...\n{spacing}")
-    break
+    while True:
+      global username
+      username = input(f"{spacing}\nPlease enter your username: ").strip()
+      password = input("Please enter your password: ").strip()
+      if user_data[(user_data['username'] == username) & (user_data['password'] == password)].empty:
+          print(f"{spacing}\nInvalid username or password. Please try again.")
+          continue
+      else:
+          print(f"{spacing}\nCorrect username and password.\nLogging In...\n{spacing}")
+          player_updater(username)
+      break
 # -------------------- Login Menu Function --------------------
 def account_menu(): #main menu for login system
   while True:
@@ -87,9 +83,22 @@ def account_menu(): #main menu for login system
       time.sleep(1)
       print(f"{spacing}\nQuitting...\n{spacing}")
       exit()
-# -------------------- End of Account Login/Sign Up --------------------
+# -------------------- Player.txt updater --------------------
+def player_updater(user): #updates player.txt
+    with open("adventure_game/data/player.txt", "w") as file:
+        file.write(f"{username}")
+# [ -------------------- End of Account Login/Sign Up -------------------- ]
 
-# -------------------- Menu function --------------------
+
+# [ -------------------- Menu Code -------------------- ]
+# -------------------- Function to import files --------------------
+def leaderboard(): #leaderboard.py
+  from adventure_game import leaderboard
+def load_game(): #load_game.py
+  from adventure_game import load_game
+def play_game(): #play_game.py
+  from adventure_game import play_game
+# -------------------- Menu Function --------------------
 def menu(): #code for the menu
   print(f"Welcome to the Adventure Game!\n{spacing}")
   while True:
@@ -118,8 +127,8 @@ def menu(): #code for the menu
       time.sleep(1)
       print(f"{spacing}\nQuitting...\n{spacing}")
       exit()
+# [ -------------------- End of menu code -------------------- ]
+
 
 if __name__ == "__main__":
     menu()  # Start the menu when the script is run directly
-
-# -------------------- End of menu code --------------------
