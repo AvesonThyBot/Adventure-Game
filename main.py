@@ -54,7 +54,7 @@ def login(user_data): #main login system
       else:
           print(f"{spacing}\nCorrect username and password.\nLogging In...\n{spacing}")
           player_updater(username)
-      break
+          break
 # -------------------- Login Menu Function --------------------
 def account_menu(): #main menu for login system
   while True:
@@ -84,7 +84,7 @@ def account_menu(): #main menu for login system
       print(f"{spacing}\nQuitting...\n{spacing}")
       exit()
 # -------------------- Player.txt updater --------------------
-def player_updater(user): #updates player.txt
+def player_updater(user): #updates username at player.txt
     with open("adventure_game/data/player.txt", "w") as file:
         file.write(f"{username}")
 # [ -------------------- End of Account Login/Sign Up -------------------- ]
