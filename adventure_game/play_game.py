@@ -241,7 +241,7 @@ def profession(): #main professional handling function
       continue  
 # -------------------- Main Game function --------------------
 def game(): #main game controlling function
-  print("Welcome To Adventure Game.\nTo start, pick a profession you will like to be.")
+  print("Hello!\n{spacing}\nTo start, pick a profession you will like to be.")
   profession()
   print(f"{spacing}\nYou will be going through 3 tutorial rooms.\nIn this game there 3 types of rooms:\n• Empty Room\n• Chest Room\n• Monster Room")
   time.sleep(1)
