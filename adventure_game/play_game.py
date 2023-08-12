@@ -1,16 +1,16 @@
 # -------------------- Imports and read_csv --------------------
-try:
+try: #checks imports
   import pandas as pd, random, time
   equipment = pd.read_csv('adventure_game/data/equipments.csv')
   u_details = pd.read_csv('adventure_game/data/user_details.csv')
   spacing = "---------"
-except Exception as error:
+except Exception as error: #error message
   print(f"There was an {error}. Stopping program.")
   time.sleep(3)
   print("Exiting...")
   exit()
 # --------------------  Loads data --------------------
-from adventure_game.login import login_data
+from main import login_data
 global username
 username = login_data()
 userdata = u_details[(u_details['username'] == username)]
@@ -25,24 +25,6 @@ def exit_menu(): #menu to show if they want to exit.
               time.sleep(1) #Slows down the program to give better UX
               exit()
           elif choice.lower().strip() in ["no","nah","n"]:
-              return
-          else:
-              print("Enter either 'Yes' or 'No'.")
-      except ValueError:
-          print("Enter either 'Yes' or 'No'.")
-          continue
-      except Exception:
-          print("There has been an unexpected error. Try again")
-def return_menu(): #menu to show if they want to return to menu
-  while True:
-      choice = input(f"{spacing}\nDo you want to go back to menu? (Yes or No): \n{spacing}\n")
-      try:
-          choice = str(choice)
-          if choice.lower().strip() in ["yes","ye","yea","y"]:
-              return "menu"
-          elif choice.lower().strip() in ["no","nah","n"]:
-              print("Going back...")
-              time.sleep(1) #Slows down the program to give better UX
               return
           else:
               print("Enter either 'Yes' or 'No'.")
@@ -85,8 +67,7 @@ def empty_options(): #option list for empty rooms.
 ------- Empty Room Options -------
 1) Proceed to room {room_count + 1}.
 2) Check Inventory.
-3) Back to menu.
-4) Save & Quit Game.
+3) Save & Quit Game.
 ----------------------------------
 """)
   try:
@@ -97,10 +78,6 @@ def empty_options(): #option list for empty rooms.
       print(inventory)
       empty_options()
     elif option_choice == 3:
-      option = return_menu()
-      if option == "menu":
-        return "menu" 
-    elif option_choice == 4:
       exit_menu()
       return
     else:
@@ -118,8 +95,7 @@ def chest_options(): #option list for chest rooms.
 1) Open chest
 2) Check Inventory.
 3) Proceed to room {room_count+1}
-4) Back to menu.
-5) Save & Quit Game.
+4) Save & Quit Game.
 ----------------------------------
 """)
   try:
@@ -132,10 +108,6 @@ def chest_options(): #option list for chest rooms.
     elif option_choice == 3:
       return "proceed"
     elif option_choice == 4:
-      option = return_menu()
-      if option == "menu":
-        return "menu" 
-    elif option_choice == 5:
       exit_menu()
       return
     else:
@@ -152,8 +124,7 @@ def monster_options(): #option list for monster rooms.
 ------- Monster Room Options -------
 1) Fight monster.
 2) Check Inventory.
-3) Back to menu.
-4) Save & Quit Game.
+3) Save & Quit Game.
 ----------------------------------
 """)
   try:
@@ -164,10 +135,6 @@ def monster_options(): #option list for monster rooms.
       print(inventory)
       monster_options()
     elif option_choice == 3:
-      option = return_menu()
-      if option == "menu":
-        return "menu" 
-    elif option_choice == 4:
       exit_menu()
       return
     else:
@@ -198,8 +165,6 @@ def empty_room(): #main controlling function for empty rooms
   elif room_count > 3 or room_count> 3.0: #normal stages
     print(f"{spacing}\nThis room is empty! Room number: {room_count}.")
     return_option = empty_options()
-    if return_option == "menu":
-      return "menu"
 def chest_room(): #main controlling function for chest rooms
   room_count = room_counter()#updates room counter
   print(f"{spacing}\nThis is a chest room! Room number: {room_count}.")
@@ -216,8 +181,6 @@ def chest_room(): #main controlling function for chest rooms
         random_row_index(f"{profession}",f"{level}")
     elif return_option == "proceed":
       pass
-    elif return_option == "menu":
-      return "menu"
     else:
       chest_room()
 def monster_room(): #main controlling function for monster rooms
@@ -228,22 +191,14 @@ def monster_room(): #main controlling function for monster rooms
   elif room_count> 3 or room_count > 3.0:#normal room stages
     print("normal")
     return_option = monster_options()
-    if return_option == "menu":
-      return "menu"
 def random_room(): #function to call a random room from the 3
   room_num = random.randint(1, 3)
   if room_num == 1:
     return_option = empty_room()
-    if return_option == "menu":
-      return "menu"
   elif room_num == 2:
     return_option = chest_room()
-    if return_option == "menu":
-      return "menu"
   else:
     return_option = monster_room()
-    if return_option == "menu":
-      return "menu"
 # -------------------- Profession function --------------------
 def profession_info(): #gives them information of professions
   time.sleep(1)
@@ -310,8 +265,6 @@ def game(): #main game controlling function
   while True: #infinitvely goes on until there is a breaking point
     time.sleep(1)
     return_option = random_room()
-    if return_option == "menu":
-      return "menu"
     inventory_updater() #updates inventory to csv after room is complete.
 game() #Run the game
 # -------------------- Extra things --------------------
@@ -323,5 +276,4 @@ add giving correct items when profession chosen
 fix bug at sign up in login
 update return_menu
 remove equipped function and update it to be the inventory UI
-fix up menu function in menu.py
 """
