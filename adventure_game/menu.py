@@ -23,6 +23,8 @@ def return_menu():
       break
     else:
       continue # The return menu checks whether  the game returns back to the menu
+
+
 # -------------------- Menu function --------------------
 def menu():
   print(f"Welcome to the Adventure Game!\n{spacing}")
@@ -38,7 +40,8 @@ def menu():
       return_menu()
       return_option = play_game()
       if return_option == "menu":
-        return_menu()
+        print("test")
+        menu()
       return menu_choice
     elif menu_choice in [
         2, "two", "Load Game", "load game", "load", "loadgame", "2.0"
@@ -48,7 +51,7 @@ def menu():
       return_menu()
       return_option = load_game()
       if return_option == "menu":
-        return_menu()
+        menu()
       return menu_choice
     elif menu_choice in [
         3, "three", "Leaderboard", "leaderboard", "leader", "board", "3.0"
@@ -56,7 +59,7 @@ def menu():
       menu_choice == 3
       return_option = leaderboard()
       if return_option == "menu":
-        return_menu()
+        menu()
     elif menu_choice in [
         4, "four", "exit", "leave", "exit game", "exitgame", "4.0"
     ] or menu_choice.lower() == "exitgame" or "exit game":

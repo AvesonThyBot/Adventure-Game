@@ -4,7 +4,7 @@ user_data = pd.read_csv("adventure_game/data/user_details.csv")
 # Variables
 spacing = "---------"
 # -------------------- Return to Login function --------------------
-def return_login():
+def return_login(): #return to login 
   while True:
     from adventure_game.menu import menu
     choice = menu()
@@ -18,7 +18,7 @@ def return_login():
     else:
       continue
 # -------------------- Create Account --------------------
-def create_account(user_data):
+def create_account(user_data): #main account creation system
   while True:
     global username
     username = input(f"{spacing}\nPlease enter the username you wish to use: ").strip()
@@ -50,7 +50,7 @@ def create_account(user_data):
   user_data.to_csv("adventure_game/data/user_details.csv", index=False)
   return user_data
 # -------------------- Login to Account --------------------
-def login(user_data):
+def login(user_data): #main login system
   while True:
     global username
     username = input(f"{spacing}\nPlease enter your username: ").strip()
@@ -66,7 +66,7 @@ def login(user_data):
   user_dict = user_data[user_data['username'] == username].iloc[0].to_dict()
   return user_dict
 # -------------------- Login Menu Function --------------------
-def login_menu():
+def login_menu(): #main menu for login system
   global user_data
   while True:
     choice = input(f"{spacing}\nWhat do you want to do?\n{spacing}\n1.Log in\n2.Create a new account\n3.Return to Menu\n{spacing}\nEnter your choice: ").strip()
@@ -75,22 +75,21 @@ def login_menu():
       print(f"Login successful!\n{spacing}")
       choice = int(choice)
       return choice
-      break
     elif choice == '2':
       user_data = create_account(user_data)
       print(f"Sign Up successful!\n{spacing}")
       choice = int(choice)
       return
-      break
     elif choice == '3':
       print(f"{spacing}\nReturning to Menu!\n{spacing}")
       from adventure_game import menu
       choice = int(choice)
       return choice
-      break
     else:
       print(f"{spacing}\nInvalid choice. Please try again.")
       continue
 # -------------------- Function to save login data --------------------
-def login_data():
+def login_data(): #username data
     return username
+
+#what is making the code run in order????
