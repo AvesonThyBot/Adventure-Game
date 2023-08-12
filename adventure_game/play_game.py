@@ -228,7 +228,7 @@ def profession(): #main professional handling function
       print(spacing)
       break
     else:
-      profession()
+      continue
   while True:
     profession_choice = input(f"Pick an Option.\n• Magician (1)\n• Archer (2)\n• Knight (3)\n{spacing}\nEnter your choice: ").strip()
     #Needs to add inventory items to the list.
@@ -278,34 +278,7 @@ def game(): #main game controlling function
     inventory_updater() #updates inventory to csv after room is complete.
 game() #Run the game
 # -------------------- Extra things --------------------
-""" TO DO:
-create room_menu
-do design for room_menu
-fix room_menu for each room type
-fix random_row_indexer
-"""
 
-""" Room menu option template
-Empty:
-------- Empty Room Options -------
-1) Proceed to room {room_count+1}.
-2) Check Inventory.
-3) Back to menu.
-4) Save & Quit Game.
-----------------------------------
-Chest:
-------- Chest Room Options -------
-1) Open chest
-2) Check Inventory.
-3) Proceed to room {room_count+1}
-4) Back to menu.
-5) Save & Quit Game.
-----------------------------------
-Monster:
-------- Monster Room Options -------
-1) Fight monster.
-2) Check Inventory.
-3) Back to menu.
-4) Save & Quit Game.
-----------------------------------
+""" TO DO:
+fix random_row_indexer
 """

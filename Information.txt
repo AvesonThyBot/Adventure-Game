@@ -50,3 +50,28 @@ The user will have a chance to get a chest with a random item (either equipment,
 •The user will gain experience points for every monster they defeat, and they will level up based on the amount of experience gained.
 •Each time the user levels up, their base stats will increase based on their class.
 •The user's stats will be saved locally to a CSV file when they try to exit the game.
+
+
+Room menu option template
+Empty:
+------- Empty Room Options -------
+1) Proceed to room {room_count+1}.
+2) Check Inventory.
+3) Back to menu.
+4) Save & Quit Game.
+----------------------------------
+Chest:
+------- Chest Room Options -------
+1) Open chest
+2) Check Inventory.
+3) Proceed to room {room_count+1}
+4) Back to menu.
+5) Save & Quit Game.
+----------------------------------
+Monster:
+------- Monster Room Options -------
+1) Fight monster.
+2) Check Inventory.
+3) Back to menu.
+4) Save & Quit Game.
+----------------------------------
