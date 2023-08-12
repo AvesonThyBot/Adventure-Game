@@ -15,22 +15,42 @@ global username
 username = login_data()
 userdata = u_details[(u_details['username'] == username)]
 # -------------------- All functions under --------------------
-def exit_menu(room): #menu to show if they want to exit.
-  pass
-def return_menu(room): #menu to show if they want to return to menu
-  #leave this for now (needs to be changed for this part of code)
+def exit_menu(): #menu to show if they want to exit.
   while True:
-    from adventure_game.login import login_menu
-    choice = login_menu()
-    if choice is None:
-      continue
-    choice = int(choice)
-    if choice == 3:
-      from adventure_game.login import menu
-    elif choice in (1, 2):
-      break
-    else:
-      continue
+      choice = input(f"{spacing}\nDo you want to save and exit the game? (Yes or No): \n{spacing}\n")
+      try:
+          choice = str(choice)
+          if choice.lower().strip() in ["yes","ye","yea","y"]:
+              print("Exiting...")
+              time.sleep(1) #Slows down the program to give better UX
+              exit()
+          elif choice.lower().strip() in ["no","nah","n"]:
+              return
+          else:
+              print("Enter either 'Yes' or 'No'.")
+      except ValueError:
+          print("Enter either 'Yes' or 'No'.")
+          continue
+      except Exception:
+          print("There has been an unexpected error. Try again")
+def return_menu(): #menu to show if they want to return to menu
+  while True:
+      choice = input(f"{spacing}\nDo you want to go back to menu? (Yes or No): \n{spacing}\n")
+      try:
+          choice = str(choice)
+          if choice.lower().strip() in ["yes","ye","yea","y"]:
+              return "menu"
+          elif choice.lower().strip() in ["no","nah","n"]:
+              print("Going back...")
+              time.sleep(1) #Slows down the program to give better UX
+              return
+          else:
+              print("Enter either 'Yes' or 'No'.")
+      except ValueError:
+          print("Enter either 'Yes' or 'No'.")
+          continue
+      except Exception:
+          print("There has been an unexpected error. Try again")
 def random_row_index(Class, level): #random chest drop
     level = int(level)
     filtered_equipment = equipment[(equipment['Class'] == Class) & (equipment['Level'] <= level + 3)]
@@ -57,8 +77,8 @@ def inventory_updater(): #updates inventory on csv
   formatted_inventory = formatted_inventory
   u_details.loc[u_details['username'] == username, ['inventory']] = formatted_inventory
   u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
-def equipped(x): #currently equipped item
-  return inventory[x]
+def inventory_UI(): #currently equipped item
+  pass
 # -------------------- Room options function --------------------
 def empty_options(): #option list for empty rooms.
   option_choice = input(f"""\
@@ -77,10 +97,11 @@ def empty_options(): #option list for empty rooms.
       print(inventory)
       empty_options()
     elif option_choice == 3:
-      return_menu("empty")
-      return
+      option = return_menu()
+      if option == "menu":
+        return "menu" 
     elif option_choice == 4:
-      exit_menu("empty")
+      exit_menu()
       return
     else:
       print(f"{spacing*4}\nInvalid option. Must be 1-4.")
@@ -111,10 +132,11 @@ def chest_options(): #option list for chest rooms.
     elif option_choice == 3:
       return "proceed"
     elif option_choice == 4:
-      return_menu("empty")
-      return
+      option = return_menu()
+      if option == "menu":
+        return "menu" 
     elif option_choice == 5:
-      exit_menu("empty")
+      exit_menu()
       return
     else:
       print(f"{spacing*4}\nInvalid option. Must be 1-4.")
@@ -142,10 +164,11 @@ def monster_options(): #option list for monster rooms.
       print(inventory)
       monster_options()
     elif option_choice == 3:
-      return_menu("empty")
-      return
+      option = return_menu()
+      if option == "menu":
+        return "menu" 
     elif option_choice == 4:
-      exit_menu("empty")
+      exit_menu()
       return
     else:
       print(f"{spacing*4}\nInvalid option. Must be 1-4.")
@@ -174,7 +197,9 @@ def empty_room(): #main controlling function for empty rooms
     print(f"{spacing}\nThis room has nothing at all. Just a empty room...")
   elif room_count > 3 or room_count> 3.0: #normal stages
     print(f"{spacing}\nThis room is empty! Room number: {room_count}.")
-    empty_options()
+    return_option = empty_options()
+    if return_option == "menu":
+      return "menu"
 def chest_room(): #main controlling function for chest rooms
   room_count = room_counter()#updates room counter
   print(f"{spacing}\nThis is a chest room! Room number: {room_count}.")
@@ -191,6 +216,8 @@ def chest_room(): #main controlling function for chest rooms
         random_row_index(f"{profession}",f"{level}")
     elif return_option == "proceed":
       pass
+    elif return_option == "menu":
+      return "menu"
     else:
       chest_room()
 def monster_room(): #main controlling function for monster rooms
@@ -200,15 +227,23 @@ def monster_room(): #main controlling function for monster rooms
     print("monster tutorial")
   elif room_count> 3 or room_count > 3.0:#normal room stages
     print("normal")
-    monster_options()
+    return_option = monster_options()
+    if return_option == "menu":
+      return "menu"
 def random_room(): #function to call a random room from the 3
   room_num = random.randint(1, 3)
   if room_num == 1:
-    empty_room()
+    return_option = empty_room()
+    if return_option == "menu":
+      return "menu"
   elif room_num == 2:
-    chest_room()
+    return_option = chest_room()
+    if return_option == "menu":
+      return "menu"
   else:
-    monster_room()
+    return_option = monster_room()
+    if return_option == "menu":
+      return "menu"
 # -------------------- Profession function --------------------
 def profession_info(): #gives them information of professions
   time.sleep(1)
@@ -274,11 +309,19 @@ def game(): #main game controlling function
   print(f"{spacing}\nThis is the end of the tutorial. You now have the ability to exit the game moving forward.")
   while True: #infinitvely goes on until there is a breaking point
     time.sleep(1)
-    random_room()
+    return_option = random_room()
+    if return_option == "menu":
+      return "menu"
     inventory_updater() #updates inventory to csv after room is complete.
 game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO DO:
 fix random_row_indexer
+add inventory system
+add giving correct items when profession chosen
+fix bug at sign up in login
+update return_menu
+remove equipped function and update it to be the inventory UI
+fix up menu function in menu.py
 """

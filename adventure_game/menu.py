@@ -36,7 +36,9 @@ def menu():
       menu_choice == 1
       login()
       return_menu()
-      play_game()
+      return_option = play_game()
+      if return_option == "menu":
+        return_menu()
       return menu_choice
     elif menu_choice in [
         2, "two", "Load Game", "load game", "load", "loadgame", "2.0"
@@ -44,13 +46,17 @@ def menu():
       menu_choice == 2
       login()
       return_menu()
-      load_game()
+      return_option = load_game()
+      if return_option == "menu":
+        return_menu()
       return menu_choice
     elif menu_choice in [
         3, "three", "Leaderboard", "leaderboard", "leader", "board", "3.0"
     ] or menu_choice.lower() == "leaderboard":
       menu_choice == 3
-      leaderboard()
+      return_option = leaderboard()
+      if return_option == "menu":
+        return_menu()
     elif menu_choice in [
         4, "four", "exit", "leave", "exit game", "exitgame", "4.0"
     ] or menu_choice.lower() == "exitgame" or "exit game":
