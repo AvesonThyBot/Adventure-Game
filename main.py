@@ -3,6 +3,7 @@
 try: #try except for imports
     import time, pandas as pd, re
     spacing = "---------" #variable for design
+    username = " " #for fetching username at load_game and play_game
     user_data = pd.read_csv("adventure_game/data/user_details.csv")
 except Exception as error: #error message
   print(f"There was an {error}. Stopping program.")
@@ -46,7 +47,6 @@ def create_account(user_data): #main account creation system
   new_user = pd.DataFrame({'username': [username], 'password': [password]})
   user_data = pd.concat([user_data, new_user])
   user_data.to_csv("adventure_game/data/user_details.csv", index=False)
-  return user_data
 # -------------------- Login to Account --------------------
 def login(user_data): #main login system
   while True:
@@ -72,10 +72,10 @@ def account_menu(): #main menu for login system
         print(f"Login successful!\n{spacing}")
         break
       elif choice == 2: #create acccount
-        user_data = create_account(user_data)
+        create_account(user_data)
         print(f"Sign Up successful!\n{spacing}")
         break
-      elif choice == 3: ##return
+      elif choice == 3: #return to menu()
         print(f"{spacing}\nReturning to Menu!\n{spacing}")
         menu()
       else:

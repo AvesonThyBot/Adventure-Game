@@ -11,6 +11,7 @@ except Exception as error: #error message
   exit()
 # --------------------  Loads data --------------------
 from main import username
+print(username)
 userdata = u_details[(u_details['username'] == username)]
 # -------------------- All functions under --------------------
 def exit_menu(): #menu to show if they want to exit.
