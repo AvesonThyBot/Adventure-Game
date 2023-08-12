@@ -71,11 +71,11 @@ def account_menu(): #main menu for login system
         login(user_data)
         print(f"Login successful!\n{spacing}")
         break
-      elif choice == 2: #login
+      elif choice == 2: #create acccount
         user_data = create_account(user_data)
         print(f"Sign Up successful!\n{spacing}")
         break
-      elif choice == 3:
+      elif choice == 3: ##return
         print(f"{spacing}\nReturning to Menu!\n{spacing}")
         menu()
       else:
@@ -88,9 +88,6 @@ def account_menu(): #main menu for login system
       time.sleep(1)
       print(f"{spacing}\nQuitting...\n{spacing}")
       exit()
-# -------------------- Function to save login data --------------------
-def login_data(): #username data
-    return username
 # -------------------- End of Account Login/Sign Up --------------------
 
 # -------------------- Menu function --------------------
@@ -103,11 +100,13 @@ def menu(): #code for the menu
       if menu_choice == 1: #play game
         account_menu()
         play_game()
+        break
       elif menu_choice == 2: #load game
         account_menu()
         load_game()
+        break
       elif menu_choice == 3: #leaderboard
-        return_option = leaderboard()
+        leaderboard()
       elif menu_choice == 4: #exit
         exit()
       else:
@@ -121,5 +120,6 @@ def menu(): #code for the menu
       print(f"{spacing}\nQuitting...\n{spacing}")
       exit()
 
-menu() #runs the menu
+if __name__ == "__main__":
+    menu()  # Start the menu when the script is run directly
 # -------------------- End of menu code --------------------

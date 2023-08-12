@@ -10,9 +10,7 @@ except Exception as error: #error message
   print("Exiting...")
   exit()
 # --------------------  Loads data --------------------
-from main import login_data
-global username
-username = login_data()
+from main import username
 userdata = u_details[(u_details['username'] == username)]
 # -------------------- All functions under --------------------
 def exit_menu(): #menu to show if they want to exit.
