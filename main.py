@@ -17,7 +17,6 @@ def load_game(): #load_game.py
   from adventure_game import load_game
 def play_game(): #play_game.py
   from adventure_game import play_game
-
 # -------------------- Account Login/Sign Up --------------------
 # -------------------- Create Account --------------------
 def create_account(user_data): #main account creation system
@@ -122,4 +121,5 @@ def menu(): #code for the menu
 
 if __name__ == "__main__":
     menu()  # Start the menu when the script is run directly
+
 # -------------------- End of menu code --------------------
