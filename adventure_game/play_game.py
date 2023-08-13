@@ -3,6 +3,7 @@ try: #checks imports
   import pandas as pd, random, time
   equipment = pd.read_csv('adventure_game/data/equipments.csv')
   u_details = pd.read_csv('adventure_game/data/user_details.csv')
+  user_inventory = pd.read_csv('adventure_game/data/user_inventory.csv')
   spacing = "---------"
 except Exception as error: #error message
   print(f"There was an {error}. Stopping program.")
@@ -53,7 +54,7 @@ def random_row_index(Class, level): #random chest drop
 
     print(selected_row)
 # -------------------- Inventory & Equipped Item function --------------------
-inventory = [] #stores the inventory temporarily 
+inventory = [eval('{' + user_inventory[user_inventory['username'] == username]['items'].values[0] + '}')] #stores the inventory temporarily 
 def inventory_updater(): #updates inventory on csv
   formatted_inventory = ','.join(str(item) for item in inventory)
   formatted_inventory = formatted_inventory
@@ -224,18 +225,24 @@ def profession(): #main professional handling function
     #Needs to add inventory items to the list.
     if profession_choice in ['1', "Magician", "one", "magician","1.0",1,1.0]:
       print("Congrats! You have chosen the profession Magician!")
-      u_details.loc[u_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana','spells','inventory']] = ['Magician',0, 0, 10, 0,100,200,"Wind Strike","Training Wand"]
+      u_details.loc[u_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Magician',0, 0, 10, 0,100,200]
       u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+      user_inventory.loc[user_inventory['username'] == username, ['items','spells']] = ["Training Wand:1","Wind Strike"]
+      user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
       break
     elif profession_choice in ['2', "Archer", "two", "archer","2.0",2,2.0]:
       print("Congrats! You have chosen the profession Archer!")
-      u_details.loc[u_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana','inventory']] = ['Archer',0, 10, 0, 1,200,100,"'TrainerBow': 1,'Trainer Arrows':16"]
+      u_details.loc[u_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Archer',0, 10, 0, 1,200,100]
       u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+      user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'TrainerBow': 1,'Trainer Arrows':16"]
+      user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
       break
     elif profession_choice in ['3', "Knight", "three", "knight","3.0",3,3.0]:
       print("Congrats! You have chosen the profession Knight!")
-      u_details.loc[u_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana','inventory']] = ['Knight',0, 10, 10, 0,100,100,"Training Sword,Training Shield"]
+      u_details.loc[u_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Knight',0, 10, 10, 0,100,100]
       u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+      user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'Training Sword':1,'Training Shield':1"]
+      user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
       break
     else:
       print(f"{spacing}\nInvalid choice. Please try again.\n{spacing}")
@@ -266,12 +273,12 @@ def game(): #main game controlling function
     time.sleep(1)
     return_option = random_room()
     inventory_updater() #updates inventory to csv after room is complete.
+print(type(eval('{' + user_inventory[user_inventory['username'] == username]['items'].values[0] + '}')))
 game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
 fix random_row_indexer
-fix login
 add inventory system
 add giving correct items when profession chosen
 remove equipped function and update it to be the inventory UI
