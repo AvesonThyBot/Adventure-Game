@@ -1,5 +1,5 @@
-username,password,profession,level,experience,health,mana,attack,magic_attack,defense,room,runs,inventory
-Aveson,Aveson_123,Knight,0.0,,100.0,100.0,10.0,10.0,0.0,1.0,,"{'Training Shield', 'Training Sword'}"
+username,password,profession,level,experience,health,mana,attack,magic_attack,defense,room,runs
+Aveson,Aveson_123,Knight,0.0,,100.0,100.0,10.0,10.0,0.0,1.0,
 Tester1,Tester_123,,,,,,,,,,,
 65ty,poplop90?,,,,,,,,,,,
 jsomaiya,pass1234!,,,,,,,,,,,

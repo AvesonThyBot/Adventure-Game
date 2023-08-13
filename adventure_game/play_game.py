@@ -1,20 +1,23 @@
 # -------------------- Imports and read_csv --------------------
 try: #checks imports
   import pandas as pd, random, time
-  equipment = pd.read_csv('adventure_game/data/equipments.csv')
-  u_details = pd.read_csv('adventure_game/data/user_details.csv')
+  user_details = pd.read_csv('adventure_game/data/user_details.csv')
   user_inventory = pd.read_csv('adventure_game/data/user_inventory.csv')
+  equipment = pd.read_csv('adventure_game/data/equipments.csv')
+  spells = pd.read_csv('adventure_game/data/potions.csv')
+  potons =pd.read_csv('adventure_game/data/spells.csv')
   spacing = "---------"
 except Exception as error: #error message
   print(f"There was an {error}. Stopping program.")
   time.sleep(3)
   print("Exiting...")
   exit()
+
 # --------------------  Loads data --------------------
 with open("adventure_game/data/player.txt", "r") as file:
   global username
   username = file.read().strip().split()[0]
-userdata = u_details[(u_details['username'] == username)]
+  userdata = user_details[(user_details['username'] == username)]
 # -------------------- All functions under --------------------
 def exit_menu(): #menu to show if they want to exit.
   while True:
@@ -34,8 +37,7 @@ def exit_menu(): #menu to show if they want to exit.
           continue
       except Exception:
           print("There has been an unexpected error. Try again")
-def random_row_index(Class, level): #random chest drop
-    level = int(level)
+def chest_drop(Class, level): #random chest drop
     filtered_equipment = equipment[(equipment['Class'] == Class) & (equipment['Level'] <= level + 3)]
     num_rows = len(filtered_equipment)
 
@@ -46,20 +48,20 @@ def random_row_index(Class, level): #random chest drop
     selected_row = filtered_equipment.iloc[random_row]
 
     name = selected_row['Name']
-    inventory_list_str = u_details.loc[u_details['username'] == userdata, 'inventory'].tolist()[0]
+    inventory_list_str = user_details.loc[user_details['username'] == userdata, 'inventory'].tolist()[0]
     inventory_list = [item.strip() for item in inventory_list_str.split(',')]
     inventory_list.append(name)
-    u_details.loc[u_details['username'] == userdata, 'inventory'] = [', '.join(inventory_list)]
-    u_details.to_csv('user_details.csv', index=False)
+    user_details.loc[user_details['username'] == userdata, 'inventory'] = [', '.join(inventory_list)]
+    user_details.to_csv('user_details.csv', index=False)
 
     print(selected_row)
 # -------------------- Inventory & Equipped Item function --------------------
-inventory = [eval('{' + user_inventory[user_inventory['username'] == username]['items'].values[0] + '}')] #stores the inventory temporarily 
+inventory = eval('{' + user_inventory[user_inventory['username'] == username]['items'].values[0] + '}') #stores the inventory temporarily 
 def inventory_updater(): #updates inventory on csv
   formatted_inventory = ','.join(str(item) for item in inventory)
   formatted_inventory = formatted_inventory
-  u_details.loc[u_details['username'] == username, ['inventory']] = formatted_inventory
-  u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+  user_inventory.loc[user_inventory['username'] == username, ['inventory']] = formatted_inventory
+  user_inventory.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
 def inventory_UI(): #currently equipped item
   pass
 # -------------------- Room options function --------------------
@@ -156,8 +158,8 @@ def room_counter(increment=1):# only write room_counter() to increase the room b
     if 'room_count' not in globals():
         room_count = 0
     room_count += increment
-    u_details.loc[u_details['username'] == username, 'room'] = room_count
-    u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+    user_details.loc[user_details['username'] == username, 'room'] = room_count
+    user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
     return room_count
 def empty_room(): #main controlling function for empty rooms
   room_count = room_counter()#updates room counter
@@ -170,16 +172,15 @@ def chest_room(): #main controlling function for chest rooms
   room_count = room_counter()#updates room counter
   print(f"{spacing}\nThis is a chest room! Room number: {room_count}.")
   if room_count in [2.0,2,"2","2.0"]: #tutorial stage
-    print("chest tutorial")
+    print(f"Congrats! You unlocked a Minor Health Potion!")
   elif room_count> 2 or room_count > 1.0:#normal room stages
     return_option = chest_options()
     if return_option == "open":
       print("You open the chest")
-      r_open = random.randint(0, 3)
-      if r_open == 1:
-        profession = u_details.loc[u_details['username']==username, 'profession'].values[0]
-        level = u_details.loc[u_details['username']==username, 'level'].values[0]
-        random_row_index(f"{profession}",f"{level}")
+      profession_name = user_details.loc[user_details['username']==username, 'profession'].values[0] #gets the profession of player
+      level = user_details.loc[user_details['username']==username, 'level'].values[0] #gets the level of the player
+      print(profession_name,level)
+      chest_drop(profession_name,level)
     elif return_option == "proceed":
       pass
     else:
@@ -225,23 +226,25 @@ def profession(): #main professional handling function
     #Needs to add inventory items to the list.
     if profession_choice in ['1', "Magician", "one", "magician","1.0",1,1.0]:
       print("Congrats! You have chosen the profession Magician!")
-      u_details.loc[u_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Magician',0, 0, 10, 0,100,200]
-      u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
-      user_inventory.loc[user_inventory['username'] == username, ['items','spells']] = ["Training Wand:1","Wind Strike"]
+      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Magician',0, 0, 10, 0,100,200]
+      user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+      user_inventory.loc[user_inventory['username'] == username, ['items','spells']] = ["'Training Wand:1','Minor Health Potion':1","Wind Strike"]
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
       break
     elif profession_choice in ['2', "Archer", "two", "archer","2.0",2,2.0]:
       print("Congrats! You have chosen the profession Archer!")
-      u_details.loc[u_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Archer',0, 10, 0, 1,200,100]
-      u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
-      user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'TrainerBow': 1,'Trainer Arrows':16"]
+      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Archer',0, 10, 0, 1,200,100]
+      user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+      user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'Trainer Bow': 1,'Trainer Arrows:16','Minor Health Potion':1"]
+      user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
       break
     elif profession_choice in ['3', "Knight", "three", "knight","3.0",3,3.0]:
       print("Congrats! You have chosen the profession Knight!")
-      u_details.loc[u_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Knight',0, 10, 10, 0,100,100]
-      u_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
-      user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'Training Sword':1,'Training Shield':1"]
+      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Knight',0, 10, 10, 0,100,100]
+      user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+      user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'Training Sword':1,'Training Shield':1,'Minor Health Potion':1"]
+      user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
       break
     else:
@@ -271,15 +274,15 @@ def game(): #main game controlling function
   print(f"{spacing}\nThis is the end of the tutorial. You now have the ability to exit the game moving forward.")
   while True: #infinitvely goes on until there is a breaking point
     time.sleep(1)
-    return_option = random_room()
+    random_room()
     inventory_updater() #updates inventory to csv after room is complete.
-print(type(eval('{' + user_inventory[user_inventory['username'] == username]['items'].values[0] + '}')))
+print(user_details.loc[user_details['username']==username, 'profession'].values[0]) #gets the profession of player
+print(user_details.loc[user_details['username']==username, 'level'].values[0]) #gets the level of the player
 game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
-fix random_row_indexer
+fix chest_drop function
 add inventory system
-add giving correct items when profession chosen
 remove equipped function and update it to be the inventory UI
 """

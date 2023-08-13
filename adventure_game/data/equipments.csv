@@ -3,7 +3,7 @@ Training Wand,Weapon,0,10,0,1,Magician
 Novice Robe,Armor,0,0,5,1,Magician
 Worn Shoes,Boots,0,0,2,1,Magician
 Training Sword,Weapon,10,0,0,1,Knight
-Training Shield,Shield,0,0,10,Knight
+Training Shield,Shield,0,0,10,1,Knight
 Leather Armor,Armor,0,0,10,1,Knight
 Leather Boots,Boots,0,0,5,1,Knight
 Trainer Bow,Weapon,10,10,0,1,Archer
@@ -25,6 +25,7 @@ Feathered Boots,Boots,0,0,10,10,Magician
 Greatsword,Weapon,35,0,0,10,Knight
 Plate Armor,Armor,0,0,30,10,Knight
 Boots of Swiftness,Boots,0,0,10,10,Knight
+Magical Arrows of Aeloria,Arrow,5,20,0,25,Archer
 Longbow,Weapon,20,0,0,10,Archer
 Scale Armor,Armor,0,0,25,10,Archer
 Boots of the Wind,Boots,0,0,10,10,Archer
@@ -46,6 +47,7 @@ Sword of the Sun,Weapon,75,0,0,20,Knight
 Compound Bow,Weapon,40,0,0,20,Archer
 Scale Mail,Armor,0,0,45,20,Archer
 Boots of the Nomad,Boots,0,0,20,20,Archer
+Magical Arrows of Eldrathia,Arrow,25,100,0,45,Archer
 Staff of the Archmagus,Weapon,50,50,0,25,Magician
 Robe of the Elders,Armor,0,0,60,25,Magician
 Boots of the Elements,Boots,0,0,25,25,Magician
@@ -54,6 +56,7 @@ Breastplate of the Crusader,Armor,0,0,50,25,Knight
 Gloves of the Crusader,Gloves,0,0,10,25,Knight
 Longbow of the Ranger,Weapon,50,0,0,25,Archer
 Studded Leather Armor,Armor,0,0,55,25,Archer
+Magical Arrows of Mythos,Arrow,30,120,0,50,Archer
 Boots of the Forest,Boots,0,0,25,25,Archer
 Staff of the Elements,Weapon,60,60,0,30,Magician
 Robe of the Archmagus,Armor,0,0,70,30,Magician
@@ -63,6 +66,7 @@ Plate Mail,Armor,0,0,80,30,Knight
 Helm of the Champion,Helmet,0,0,30,30,Knight
 Crossbow of the Marksman,Weapon,70,0,0,30,Archer
 Dragon Scale Armor,Armor,0,0,70,30,Archer
+Magical Arrows of Valandor,Arrow,35,140,0,55,Archer
 Boots of the Marksman,Boots,0,0,30,30,Archer
 Staff of the Dragonborn,Weapon,80,0,0,35,Magician
 Robe of the Dragonborn,Armor,0,0,90,35,Magician
@@ -81,4 +85,5 @@ Breastplate of the High Inquisitor,Armor,0,0,120,40,Knight
 Gloves of the High Inquisitor,Gloves,0,0,20,40,Knight
 Longbow of the Hunter,Weapon,110,0,0,40,Archer
 Dragon Scale Mail,Armor,0,0,90,40,Archer
-Boots of the Hunter's Mark,Boots,0,0,40,40,Ar
+Boots of the Hunter's Mark,Boots,0,0,40,40,Archer
+Magical Arrows of Lumina,Arrow,40,160,0,60,Archer
