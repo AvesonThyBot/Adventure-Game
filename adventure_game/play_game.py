@@ -125,7 +125,7 @@ def inventory_assigner(): #updates inventory variable when this function is call
   return inventory_dict #stores the inventory temporarily 
 inventory = inventory_assigner() #assigns updated iventory to variable.
 def inventory_updater(): #updates inventory on csv
-    formatted_inventory = ','.join(f"'{key}': {value}" for key, value in inventory.items())
+    formatted_inventory = ','.join(f"'{key}':{value}" for key, value in inventory.items())
     user_inventory.loc[user_inventory['username'] == username, ['items']] = formatted_inventory
     user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
 def inventory_UI(): #currently equipped item
