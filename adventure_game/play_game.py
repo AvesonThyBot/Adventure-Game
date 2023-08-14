@@ -344,7 +344,6 @@ game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
-fix chest_drop function
 add inventory system
 remove equipped function and update it to be the inventory UI
 """
