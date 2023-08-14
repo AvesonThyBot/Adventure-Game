@@ -1,11 +1,11 @@
 # -------------------- Imports and read_csv --------------------
 try: #checks imports
-  import pandas as pd, random, time
+  import pandas as pd, random, time,json
   user_details = pd.read_csv('adventure_game/data/user_details.csv')
   user_inventory = pd.read_csv('adventure_game/data/user_inventory.csv')
   equipment = pd.read_csv('adventure_game/data/equipments.csv')
-  spells = pd.read_csv('adventure_game/data/potions.csv')
-  potons =pd.read_csv('adventure_game/data/spells.csv')
+  spells = pd.read_csv('adventure_game/data/spells.csv')
+  potions =pd.read_csv('adventure_game/data/potions.csv')
   spacing = "---------"
 except Exception as error: #error message
   print(f"There was an {error}. Stopping program.")
@@ -14,10 +14,14 @@ except Exception as error: #error message
   exit()
 
 # --------------------  Loads data --------------------
-with open("adventure_game/data/player.txt", "r") as file:
+with open("adventure_game/data/player.txt", "r") as file: #fetching username
   global username
   username = file.read().strip().split()[0]
-userdata = user_details[(user_details['username'] == username)]
+userdata = user_details[(user_details['username'] == username)] #assigns the players data to userdata
+def update_details(username): #updates profession_type and level
+    profession_type = user_details.loc[user_details['username'] == username, 'profession'].values[0]
+    level = user_details.loc[user_details['username'] == username, 'level'].values[0]
+    return profession_type, level
 # -------------------- All functions under --------------------
 def exit_menu(): #menu to show if they want to exit.
   while True:
@@ -37,26 +41,89 @@ def exit_menu(): #menu to show if they want to exit.
           continue
       except Exception:
           print("There has been an unexpected error. Try again")
-def chest_drop(Class, level): #random chest drop
-    filtered_equipment = equipment[(equipment['Class'] == Class) & (equipment['Level'] <= level + 3)]
+def chest_drop(profession_type, level): #random chest drop
+  # ---------- Sorting drop options ----------
+  if profession_type == "Magician":
+    filtered_spells = spells[spells['Level'] <= level + 10]#gets all spells that is within 10 level or same level
+    drop_data = random.randint(1,3)
+  else:
+    drop_data = random.randint(1,2)
+  filtered_equipment = equipment[(equipment['Class'] == profession_type) & (equipment['Level'] <= level + 3)] #gets all equipments for that profession & same equipment level or 3 above 
+  if drop_data == 1: #equipments
+    drop_type = "Equipments"
+    drop_data = filtered_equipment
     num_rows = len(filtered_equipment)
+  elif drop_data == 2: #potions
+    drop_type = "Potions"
+    drop_data = potions
+    num_rows = len(potions)
+  else: #spells
+    drop_type = "Spells"
+    drop_data = filtered_spells
+    num_rows = len(filtered_spells)
 
-    if num_rows == 0:
-        return None
+  # ---------- Updating Inventory ----------
+  inventory = inventory_assigner() #updates inventory
 
-    random_row = random.randint(0, num_rows - 1)
-    selected_row = filtered_equipment.iloc[random_row]
+  # ---------- Giving a valid drop ----------
+  while True:#while loop to give them a drop that they don't have.
+    # ---------- Gets Item ----------
+    random_row = random.randint(0,num_rows-1) #gets a random row
+    selected_row = drop_data.iloc[random_row] #random drop
+    
+    # ---------- Coverting data types ----------
+    try: #tries to make Name it
+      item_name = selected_row["Name"]
+    except KeyError: #if its a spell it will use spell not name
+      if "Name" in selected_row.index:
+        item_name = selected_row.loc["Name"]
+      elif "Spells" in selected_row.index:
+        item_name = selected_row.loc["Spells"]
+      elif "name" in selected_row.index:
+        item_name = selected_row.loc["name"]
+      else:
+        print("There was an Error with chest drop. ID: Item_name")
+    
+    # ---------- Iteration for item and amount of item ----------
+    # ---------- Equipment and Spells not stackable ----------
+    if (drop_type == "Equipments" or drop_type == "Spells") and (item_name != "Trainer Arrows"):
+      if item_name not in inventory: #checks if the item is not in inventory
+        inventory[item_name] = 1 #adds 1 of the item to inventory
+        print(f"Added {inventory[item_name]} {item_name} to inventory.")
+        break
+    # ---------- Stackable Potion amount ----------
+    elif drop_type == "Potions":
+      if item_name not in inventory:
+        inventory[item_name] = 1 #adds 1 of the item to inventory
+        print(f"Added {inventory[item_name]} {item_name} to inventory. a")
+        break
+      else:
+        inventory[item_name] += 1
+        print(f"Added {inventory[item_name]} {item_name} to inventory. b")
+        break
+    # ---------- Multiple arrows awarded and stackable ----------
+    elif drop_type=="Equipments" and item_name == "Trainer Arrows":
+        if item_name not in inventory:
+          inventory[item_name] = 8 #8 arrows per drop
+          print(f"Added {inventory[item_name]} {item_name} to inventory.")
+          break
+        else:
+          inventory[item_name] += 8 #8 arrows per drop
+          print(f"Added {inventory[item_name]} more {item_name} to inventory.")
+          break
+    # ---------- Additional error handling, should not occur ----------
+    else:
+      print("There was an error.")
+      print("Exiting...")
+      exit()
 
-    name = selected_row['Name']
-    inventory_list_str = user_details.loc[user_details['username'] == userdata, 'inventory'].tolist()[0]
-    inventory_list = [item.strip() for item in inventory_list_str.split(',')]
-    inventory_list.append(name)
-    user_details.loc[user_details['username'] == userdata, 'inventory'] = [', '.join(inventory_list)]
-    user_details.to_csv('user_details.csv', index=False)
-
-    print(selected_row)
 # -------------------- Inventory & Equipped Item function --------------------
-inventory = eval('{' + user_inventory[user_inventory['username'] == username]['items'].values[0] + '}') #stores the inventory temporarily 
+def inventory_assigner(): #updates inventory variable when this function is called.
+  inventory_data = user_inventory[user_inventory['username'] == username]['items'].values[0]
+  inventory_data = inventory_data.replace("'", "").replace(":", ": ").replace(",", ", ")
+  inventory_dict = dict(item.split(": ") for item in inventory_data.split(","))
+  return inventory_dict #stores the inventory temporarily 
+inventory = inventory_assigner()
 def inventory_updater(): #updates inventory on csv
   formatted_inventory = ','.join(str(item) for item in inventory)
   formatted_inventory = formatted_inventory
@@ -177,10 +244,9 @@ def chest_room(): #main controlling function for chest rooms
     return_option = chest_options()
     if return_option == "open":
       print("You open the chest")
-      profession_name = user_details.loc[user_details['username']==username, 'profession'].values[0] #gets the profession of player
-      level = user_details.loc[user_details['username']==username, 'level'].values[0] #gets the level of the player
-      print(profession_name,level)
-      chest_drop(profession_name,level)
+      profession_type,level = update_details()
+      print(profession_type,level)
+      chest_drop(profession_type,level)
     elif return_option == "proceed":
       pass
     else:
@@ -276,6 +342,7 @@ def game(): #main game controlling function
     time.sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
+print(chest_drop("Magician",1))
 game() #Run the game
 # -------------------- Extra things --------------------
 
