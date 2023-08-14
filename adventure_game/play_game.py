@@ -18,7 +18,7 @@ with open("adventure_game/data/player.txt", "r") as file: #fetching username
   global username
   username = file.read().strip().split()[0]
 userdata = user_details[(user_details['username'] == username)] #assigns the players data to userdata
-def update_details(username): #updates profession_type and level
+def update_details(): #updates profession_type and level
     profession_type = user_details.loc[user_details['username'] == username, 'profession'].values[0]
     level = user_details.loc[user_details['username'] == username, 'level'].values[0]
     return profession_type, level
@@ -63,6 +63,7 @@ def chest_drop(profession_type, level): #random chest drop
     num_rows = len(filtered_spells)
 
   # ---------- Updating Inventory ----------
+  global inventory
   inventory = inventory_assigner() #updates inventory
 
   # ---------- Giving a valid drop ----------
@@ -95,11 +96,11 @@ def chest_drop(profession_type, level): #random chest drop
     elif drop_type == "Potions":
       if item_name not in inventory:
         inventory[item_name] = 1 #adds 1 of the item to inventory
-        print(f"Added {inventory[item_name]} {item_name} to inventory. a")
+        print(f"Added {inventory[item_name]} {item_name} to inventory.")
         break
       else:
         inventory[item_name] += 1
-        print(f"Added {inventory[item_name]} {item_name} to inventory. b")
+        print(f"Added {inventory[item_name]} {item_name} to inventory.")
         break
     # ---------- Multiple arrows awarded and stackable ----------
     elif drop_type=="Equipments" and item_name == "Trainer Arrows":
@@ -116,19 +117,17 @@ def chest_drop(profession_type, level): #random chest drop
       print("There was an error.")
       print("Exiting...")
       exit()
-
 # -------------------- Inventory & Equipped Item function --------------------
 def inventory_assigner(): #updates inventory variable when this function is called.
   inventory_data = user_inventory[user_inventory['username'] == username]['items'].values[0]
   inventory_data = inventory_data.replace("'", "").replace(":", ": ").replace(",", ", ")
   inventory_dict = dict(item.split(": ") for item in inventory_data.split(","))
   return inventory_dict #stores the inventory temporarily 
-inventory = inventory_assigner()
+inventory = inventory_assigner() #assigns updated iventory to variable.
 def inventory_updater(): #updates inventory on csv
-  formatted_inventory = ','.join(str(item) for item in inventory)
-  formatted_inventory = formatted_inventory
-  user_inventory.loc[user_inventory['username'] == username, ['inventory']] = formatted_inventory
-  user_inventory.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
+    formatted_inventory = ','.join(f"'{key}': {value}" for key, value in inventory.items())
+    user_inventory.loc[user_inventory['username'] == username, ['items']] = formatted_inventory
+    user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
 def inventory_UI(): #currently equipped item
   pass
 # -------------------- Room options function --------------------
@@ -245,7 +244,6 @@ def chest_room(): #main controlling function for chest rooms
     if return_option == "open":
       print("You open the chest")
       profession_type,level = update_details()
-      print(profession_type,level)
       chest_drop(profession_type,level)
     elif return_option == "proceed":
       pass
@@ -342,7 +340,6 @@ def game(): #main game controlling function
     time.sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
-print(chest_drop("Magician",1))
 game() #Run the game
 # -------------------- Extra things --------------------
 

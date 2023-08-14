@@ -1,2 +1,8 @@
-username,items,spells,inventory
-Aveson,"'Trainer Bow': 1,'Trainer Arrows:16','Minor Health Potion':1",,"Training Sword,Training Shield,Minor Health Potion"
+username,password,profession,level,experience,health,mana,attack,magic_attack,defense,room,runs
+Aveson,Aveson_123,Archer,0.0,,200.0,100.0,10.0,0.0,1.0,5.0,
+Tester1,Tester_123,,,,,,,,,,
+65ty,poplop90?,,,,,,,,,,
+jsomaiya,pass1234!,,,,,,,,,,
+Aveson1341234,asdvasr234,,,,,,,,,,
+Aveson12312,dsvjbhwejhrb234,,,,,,,,,,
+abdullah,amod_11lc,,,,,,,,,,
