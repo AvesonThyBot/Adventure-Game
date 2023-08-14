@@ -17,7 +17,7 @@ except Exception as error: #error message
 with open("adventure_game/data/player.txt", "r") as file:
   global username
   username = file.read().strip().split()[0]
-  userdata = user_details[(user_details['username'] == username)]
+userdata = user_details[(user_details['username'] == username)]
 # -------------------- All functions under --------------------
 def exit_menu(): #menu to show if they want to exit.
   while True:
@@ -276,8 +276,6 @@ def game(): #main game controlling function
     time.sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
-print(user_details.loc[user_details['username']==username, 'profession'].values[0]) #gets the profession of player
-print(user_details.loc[user_details['username']==username, 'level'].values[0]) #gets the level of the player
 game() #Run the game
 # -------------------- Extra things --------------------
 
