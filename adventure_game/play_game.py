@@ -55,7 +55,7 @@ def update_details(): #updates profession_type and level
     profession_type = user_details.loc[user_details['username'] == username, 'profession'].values[0]
     level = user_details.loc[user_details['username'] == username, 'level'].values[0]
     return profession_type, level
-# -------------------- All functions under --------------------
+# -------------------- Extra Functions --------------------
 def exit_menu(): #menu to show if they want to exit.
   while True:
       choice = input(f"{spacing}\nDo you want to save and exit the game? (Yes or No): \n{spacing}\n")
@@ -79,6 +79,7 @@ def chest_drop(profession_type, level): #random chest drop
   if profession_type == "Magician":
     filtered_spells = spells[spells['Level'] <= level + 10]#gets all spells that is within 10 level or same level
     drop_data = random.randint(1,3)
+    inventory_spells = user_inventory.loc[user_inventory["username"] == username, "spells"].values
   else:
     drop_data = random.randint(1,2)
   filtered_equipment = equipment[(equipment['Class'] == profession_type) & (equipment['Level'] <= level + 3)] #gets all equipments for that profession & same equipment level or 3 above 
@@ -120,10 +121,16 @@ def chest_drop(profession_type, level): #random chest drop
     
     # ---------- Iteration for item and amount of item ----------
     # ---------- Equipment and Spells not stackable ----------
-    if (drop_type == "Equipments" or drop_type == "Spells") and (item_name != "Trainer Arrows"):
+    print(item_name,drop_type,drop_data)
+    if drop_type == "Equipments" and item_name != "Trainer Arrows":
       if item_name not in inventory: #checks if the item is not in inventory
         inventory[item_name] = 1 #adds 1 of the item to inventory
         print(f"Added {inventory[item_name]} {item_name} to inventory.")
+        break
+    elif drop_type == "Spells":
+      if item_name not in inventory_spells:
+        user_inventory.loc[user_details['username'] == username, "spells"] == item_name
+        user_inventory.to_csv('adventure_game/data/user_inventory.csv', index=False)
         break
     # ---------- Stackable Potion amount ----------
     elif drop_type == "Potions":
@@ -293,7 +300,7 @@ def chest_room(): #main controlling function for chest rooms
       profession_type,level = update_details()
       chest_drop(profession_type,level)
     elif return_option == "proceed":
-      pass
+      return
     else:
       chest_room()
 def monster_room(): #main controlling function for monster rooms
@@ -341,7 +348,10 @@ def profession(): #main professional handling function
       user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Magician',0, 0, 10, 0,100,200]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items','spells']] = ["'Training Wand:1','Minor Health Potion':1","Wind Strike"]
+      user_inventory['items'] = user_inventory['items'].apply(lambda x: {item.split(':')[0].strip("'"): int(item.split(':')[1].strip("'")) for item in x.split(',')})
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
+      global inventory_spells
+      inventory_spells = []
       inventory = inventory_assigner()
       break
     elif profession_choice in ['2', "Archer", "two", "archer","2.0",2,2.0]:
@@ -349,6 +359,7 @@ def profession(): #main professional handling function
       user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Archer',0, 10, 0, 1,200,100]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'Trainer Bow': 1,'Trainer Arrows:16','Minor Health Potion':1"]
+      user_inventory['items'] = user_inventory['items'].apply(lambda x: {item.split(':')[0].strip("'"): int(item.split(':')[1].strip("'")) for item in x.split(',')})
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
       inventory = inventory_assigner()
@@ -358,6 +369,7 @@ def profession(): #main professional handling function
       user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Knight',0, 10, 10, 0,100,100]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'Training Sword':1,'Training Shield':1,'Minor Health Potion':1"]
+      user_inventory['items'] = user_inventory['items'].apply(lambda x: {item.split(':')[0].strip("'"): int(item.split(':')[1].strip("'")) for item in x.split(',')})
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
       inventory = inventory_assigner()
@@ -391,12 +403,15 @@ def game(): #main game controlling function
     sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
+# chest_drop("Magician",0)
 game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
-add inventory system
+make datatype for user_inventory["items"] int.
 fix spells being added to inventory
+add spells spell updating functions
+make spells in user_inventory a list
 fix chest drop; checking inventory then opening chest breaks the system
 fix chest room breaking sometimes when open chest is picked
 remove equipped function and update it to be the inventory UI
