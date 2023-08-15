@@ -129,5 +129,5 @@ def menu(): #code for the menu
       exit()
 # [ -------------------- End of menu code -------------------- ]
 
-if __name__ == "__main__":
-    menu()  # Start the menu when the script is run directly
+if __name__ == "__main__": # Start the menu when the script is run directly
+    menu()

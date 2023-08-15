@@ -1,18 +1,51 @@
 # -------------------- Imports and read_csv --------------------
 try: #checks imports
-  import pandas as pd, random, time,json
+  import pandas as pd, random, time
   user_details = pd.read_csv('adventure_game/data/user_details.csv')
   user_inventory = pd.read_csv('adventure_game/data/user_inventory.csv')
   equipment = pd.read_csv('adventure_game/data/equipments.csv')
   spells = pd.read_csv('adventure_game/data/spells.csv')
   potions =pd.read_csv('adventure_game/data/potions.csv')
   spacing = "---------"
+  global options 
+  options = {'sleep':True,'skipEmpty':False}
 except Exception as error: #error message
   print(f"There was an {error}. Stopping program.")
   time.sleep(3)
   print("Exiting...")
   exit()
-
+# --------------------  Options function --------------------
+def sleep(x): #function that lets user bypass time.sleep
+  if options['sleep'] == True:
+    time.sleep(x)
+def proceedEmpty(): #function to proceed empty room automatically
+  if options['skipEmpty'] == True:
+    return "skip"
+def options_menu(): #options menu
+  return_toggle = True
+  while return_toggle:
+    print(f"{spacing} Options {spacing}\nSelect the option you want to change or type 'return'.")
+    choice = input(f"1) Keep Slowdown: {options['sleep']}\n2) Skip Empty Rooms: {options['skipEmpty']}\n{spacing*3}\n")
+    try:
+      if choice.lower() == "return":
+        return_toggle = False
+      else:
+          choice = int(choice)
+          if choice == 1:
+            print(f"{spacing*3}\nKeep Slowdown is set to {not options['sleep']}")
+            options['sleep'] = not options['sleep']
+          elif choice == 2:
+            print(f"{spacing*3}\nSkip Empty Rooms is set to {not options['skipEmpty']}")
+            options['skipEmpty'] = not options['skipEmpty']
+          else:
+            print(f"{spacing*3}\nInvalid choice. Please choose 1 or 2.")
+    except ValueError:
+      print(f"{spacing*3}\nInput must be an Integer between 1-2 or 'return'.")
+    except Exception as error:
+      print(f"{spacing}\nThere was an {error}.")
+      time.sleep(1)
+      print(f"{spacing}\nQuitting...\n{spacing}")
+      exit()
 # --------------------  Loads data --------------------
 with open("adventure_game/data/player.txt", "r") as file: #fetching username
   global username
@@ -30,7 +63,7 @@ def exit_menu(): #menu to show if they want to exit.
           choice = str(choice)
           if choice.lower().strip() in ["yes","ye","yea","y"]:
               print("Exiting...")
-              time.sleep(1) #Slows down the program to give better UX
+              sleep(1) #Slows down the program to give better UX
               exit()
           elif choice.lower().strip() in ["no","nah","n"]:
               return
@@ -136,6 +169,7 @@ def empty_options(): #option list for empty rooms.
 1) Proceed to room {room_count + 1}.
 2) Check Inventory.
 3) Save & Quit Game.
+4) Check options
 ----------------------------------
 """)
   try:
@@ -147,6 +181,9 @@ def empty_options(): #option list for empty rooms.
       empty_options()
     elif option_choice == 3:
       exit_menu()
+      return
+    elif option_choice == 4:
+      options_menu()
       return
     else:
       print(f"{spacing*4}\nInvalid option. Must be 1-4.")
@@ -164,6 +201,7 @@ def chest_options(): #option list for chest rooms.
 2) Check Inventory.
 3) Proceed to room {room_count+1}
 4) Save & Quit Game.
+5) Check options
 ----------------------------------
 """)
   try:
@@ -177,6 +215,9 @@ def chest_options(): #option list for chest rooms.
       return "proceed"
     elif option_choice == 4:
       exit_menu()
+      return
+    elif option_choice == 5:
+      options_menu()
       return
     else:
       print(f"{spacing*4}\nInvalid option. Must be 1-4.")
@@ -193,6 +234,7 @@ def monster_options(): #option list for monster rooms.
 1) Fight monster.
 2) Check Inventory.
 3) Save & Quit Game.
+4) Check options
 ----------------------------------
 """)
   try:
@@ -204,6 +246,9 @@ def monster_options(): #option list for monster rooms.
       monster_options()
     elif option_choice == 3:
       exit_menu()
+      return
+    elif option_choice == 4:
+      options_menu()
       return
     else:
       print(f"{spacing*4}\nInvalid option. Must be 1-4.")
@@ -232,7 +277,10 @@ def empty_room(): #main controlling function for empty rooms
     print(f"{spacing}\nThis room has nothing at all. Just a empty room...")
   elif room_count > 3 or room_count> 3.0: #normal stages
     print(f"{spacing}\nThis room is empty! Room number: {room_count}.")
-    return_option = empty_options()
+    choice = proceedEmpty() #code can be shortened but makes it neater if its a function
+    if choice == "skip":
+      return
+    empty_options()
 def chest_room(): #main controlling function for chest rooms
   room_count = room_counter()#updates room counter
   print(f"{spacing}\nThis is a chest room! Room number: {room_count}.")
@@ -259,20 +307,20 @@ def monster_room(): #main controlling function for monster rooms
 def random_room(): #function to call a random room from the 3
   room_num = random.randint(1, 3)
   if room_num == 1:
-    return_option = empty_room()
+    empty_room()
   elif room_num == 2:
-    return_option = chest_room()
+    chest_room()
   else:
-    return_option = monster_room()
+    monster_room()
 # -------------------- Profession function --------------------
 def profession_info(): #gives them information of professions
-  time.sleep(1)
+  sleep(1)
   print(f"{spacing}{spacing}{spacing}{spacing}\n1) Magician\n{spacing}Magician Information{spacing}\n• Magician starts with 'Training Wand' with stats:\n Attack: 0\n Magic Attack: 10\n Defense: 0\n• Other Stats:\n Health: 100\n Mana: 200\n Beginner Spell: 'Wind Strike' (10 mana per cast)\n{spacing}Magician Leveling Perks{spacing}\n• Magician's base magic attack increases by 10!\n• Magician's health increases by 100 and mana increases by 200!\n{spacing}{spacing}{spacing}{spacing}")
-  time.sleep(1)
+  sleep(1)
   print(f"2) Archer\n{spacing}Archer Information{spacing}\n• Archer starts with 'Training Bow' and 'Training Arrows' with stats:\n Attack: 10\n Magic Attack: 10\n Defense: 0\n• Other Stats:\n Health: 100\n Mana: 100\n Basic Arrow Shot (uses 1 arrow)\n Magic Arrow Shot (uses 1 arrow and 10 mana)\n{spacing}Archer Leveling Perks{spacing}\n• Archer's base attack and magic increase by 10!\n• Archer's health increases by 100 and mana increases by 100!\n{spacing}{spacing}{spacing}{spacing}")
-  time.sleep(1)
+  sleep(1)
   print(f"3) Knight\n{spacing}Knight Information{spacing}\n• Knight starts with 'Training Sword' and 'Training Shield'.\n• Training Sword stats: \n Attack: 10\n Magic Attack: 0\n• Training Shield:\n Defense: 1\n• Other Stats:\n Health: 200\n Mana: 100\n{spacing}Knight Leveling Perks{spacing}\n• Knight's base attack and defense increases by 10!\n• Knight's health increases by 200 and mana increases by 100!\n{spacing}{spacing}{spacing}{spacing}")
-  time.sleep(1)
+  sleep(1)
 def profession(): #main professional handling function
   while True:
     profession_info_choice = input(f"{spacing}\nDo you want to check profession information and perks? (Yes or No): ").strip()
@@ -322,25 +370,25 @@ def game(): #main game controlling function
   print(f"Hello {username}!\n{spacing}\nTo start, pick a profession you will like to be.")
   profession()
   print(f"{spacing}\nYou will be going through 3 tutorial rooms.\nIn this game there 3 types of rooms:\n• Empty Room\n• Chest Room\n• Monster Room")
-  time.sleep(1)
+  sleep(1)
   print(f"{spacing}\nFirst Tutorial room.")
-  time.sleep(1)
+  sleep(1)
   empty_room() #sends player to empty room (tutorial)
   inventory_updater() #updates inventory to csv after room is complete.
-  time.sleep(1)
+  sleep(1)
   print(f"{spacing}\nSecond Tutorial room.")
-  time.sleep(1)
+  sleep(1)
   chest_room() #sends player to chest room (tutorial)
   inventory_updater() #updates inventory to csv after room is complete.
-  time.sleep(1)
+  sleep(1)
   print(f"{spacing}\nThird Tutorial room.")
-  time.sleep(1)
+  sleep(1)
   monster_room() #sends player to monster room (tutorial)
   inventory_updater() #updates inventory to csv after room is complete.
-  time.sleep(1)
+  sleep(1)
   print(f"{spacing}\nThis is the end of the tutorial. You now have the ability to exit the game moving forward.")
   while True: #infinitvely goes on until there is a breaking point
-    time.sleep(1)
+    sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
 game() #Run the game
@@ -348,5 +396,8 @@ game() #Run the game
 
 """ TO-DO:
 add inventory system
+fix spells being added to inventory
+fix chest drop; checking inventory then opening chest breaks the system
+fix chest room breaking sometimes when open chest is picked
 remove equipped function and update it to be the inventory UI
 """
