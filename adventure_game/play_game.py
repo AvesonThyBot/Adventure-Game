@@ -120,10 +120,9 @@ def chest_drop(profession_type, level): #random chest drop
 # -------------------- Inventory & Equipped Item function --------------------
 def inventory_assigner(): #updates inventory variable when this function is called.
   inventory_data = user_inventory[user_inventory['username'] == username]['items'].values[0]
-  inventory_data = inventory_data.replace("'", "").replace(":", ": ").replace(",", ", ")
+  inventory_data = inventory_data.replace("'", "").replace(":", ": ").replace(",", ",")
   inventory_dict = dict(item.split(": ") for item in inventory_data.split(","))
   return inventory_dict #stores the inventory temporarily 
-inventory = inventory_assigner() #assigns updated iventory to variable.
 def inventory_updater(): #updates inventory on csv
     formatted_inventory = ','.join(f"'{key}':{value}" for key, value in inventory.items())
     user_inventory.loc[user_inventory['username'] == username, ['items']] = formatted_inventory
@@ -288,12 +287,14 @@ def profession(): #main professional handling function
   while True:
     profession_choice = input(f"Pick an Option.\n• Magician (1)\n• Archer (2)\n• Knight (3)\n{spacing}\nEnter your choice: ").strip()
     #Needs to add inventory items to the list.
+    global inventory
     if profession_choice in ['1', "Magician", "one", "magician","1.0",1,1.0]:
       print("Congrats! You have chosen the profession Magician!")
       user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Magician',0, 0, 10, 0,100,200]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items','spells']] = ["'Training Wand:1','Minor Health Potion':1","Wind Strike"]
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
+      inventory = inventory_assigner()
       break
     elif profession_choice in ['2', "Archer", "two", "archer","2.0",2,2.0]:
       print("Congrats! You have chosen the profession Archer!")
@@ -302,6 +303,7 @@ def profession(): #main professional handling function
       user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'Trainer Bow': 1,'Trainer Arrows:16','Minor Health Potion':1"]
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
+      inventory = inventory_assigner()
       break
     elif profession_choice in ['3', "Knight", "three", "knight","3.0",3,3.0]:
       print("Congrats! You have chosen the profession Knight!")
@@ -310,6 +312,7 @@ def profession(): #main professional handling function
       user_inventory.loc[user_inventory['username'] == username, ['items']] = ["'Training Sword':1,'Training Shield':1,'Minor Health Potion':1"]
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
+      inventory = inventory_assigner()
       break
     else:
       print(f"{spacing}\nInvalid choice. Please try again.\n{spacing}")
