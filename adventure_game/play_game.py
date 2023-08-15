@@ -28,6 +28,8 @@ def options_menu(): #options menu
     choice = input(f"1) Keep Slowdown: {options['sleep']}\n2) Skip Empty Rooms: {options['skipEmpty']}\n{spacing*3}\n")
     try:
       if choice.lower() == "return":
+        user_details.loc[user_details['username'] == username, 'options'] = [options]
+        user_details.to_csv('adventure_game/data/user_details.csv', index=False)  
         return_toggle = False
       else:
           choice = int(choice)
@@ -121,7 +123,7 @@ def chest_drop(profession_type, level): #random chest drop
     
     # ---------- Iteration for item and amount of item ----------
     # ---------- Equipment not stackable ----------
-    print(item_name,drop_type)
+    print(item_name,drop_type) #testing data
     if drop_type == "Equipments" and item_name != "Trainer Arrows":
       if item_name not in inventory: #checks if the item is not in inventory
         inventory[item_name] = 1 #adds 1 of the item to inventory
@@ -348,7 +350,7 @@ def profession(): #main professional handling function
     global inventory
     if profession_choice in ['1', "Magician", "one", "magician","1.0",1,1.0]:
       print("Congrats! You have chosen the profession Magician!")
-      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Magician',0, 0, 10, 0,100,200]
+      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Magician',0, 0, 10, 0,100,200,options]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items','spells']] = [f"'Training Wand':{int(1)},'Minor Health Potion':{int(1)}","Wind Strike"]
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
@@ -358,7 +360,7 @@ def profession(): #main professional handling function
       break
     elif profession_choice in ['2', "Archer", "two", "archer","2.0",2,2.0]:
       print("Congrats! You have chosen the profession Archer!")
-      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Archer',0, 10, 0, 1,200,100]
+      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Archer',0, 10, 0, 1,200,100,options]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items']] = [f"'Trainer Bow': {int(1)},'Trainer Arrows':{int(16)},'Minor Health Potion':{int(1)}"]
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
@@ -367,7 +369,7 @@ def profession(): #main professional handling function
       break
     elif profession_choice in ['3', "Knight", "three", "knight","3.0",3,3.0]:
       print("Congrats! You have chosen the profession Knight!")
-      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana']] = ['Knight',0, 10, 10, 0,100,100]
+      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Knight',0, 10, 10, 0,100,100,options]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items']] = [f"'Training Sword':{int(1)},'Training Shield':{int(1)},'Minor Health Potion':{int(1)}"]
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
@@ -408,9 +410,8 @@ game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
-add options data to user_details
 make datatype for user_inventory["items"] int.
-add spells spell updating functions
+add spells updating functions
 fix chest drop; checking inventory then opening chest breaks the system
 fix chet room increasing number if any other function is called and then returned back to old function.
 fix chest room breaking sometimes when open chest is picked
