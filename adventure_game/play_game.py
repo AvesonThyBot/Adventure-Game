@@ -86,7 +86,8 @@ def chest_drop(profession_type, level): #random chest drop
     if profession_type == "Magician":
       filtered_spells = spells[spells['Level'] <= level + 10]#gets all spells that is within 10 level or same level
       drop_data = random.randint(1,3)
-      inventory_spells = user_inventory.loc[user_inventory["username"] == username, "spells"].values
+      global inventory_spells
+      inventory_spells = spells_assigner()
     else:
       drop_data = random.randint(1,2)
     filtered_equipment = equipment[(equipment['Class'] == profession_type) & (equipment['Level'] <= level + 3)] #gets all equipments for that profession & same equipment level or 3 above 
@@ -132,13 +133,12 @@ def chest_drop(profession_type, level): #random chest drop
         break
     # ---------- Spells not stackable and stored in spells ----------
     elif drop_type == "Spells":
-      existing_spells = user_inventory.loc[user_inventory['username'] == username, 'spells'].values[0]
-      existing_spells_list = existing_spells.split(',')
+      existing_spells_list = inventory_spells.split(',')
       if item_name in existing_spells_list:
         print(f"{spacing}\nThe spell {item_name} is already in your spells. Rerolling chest drop...")
         continue  # Exit the loop without adding the spell to inventory
       
-      updated_spells = existing_spells + ',' + item_name
+      updated_spells = inventory_spells + ',' + item_name
       updated_spells = ','.join(sorted(set(updated_spells.split(','))))
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = updated_spells
       user_inventory.to_csv('adventure_game/data/user_inventory.csv', index=False)
@@ -175,6 +175,10 @@ def inventory_assigner(): #updates inventory variable when this function is call
   inventory_data = inventory_data.replace("'", "").replace(":", ": ").replace(",", ",")
   inventory_dict = dict(item.split(": ") for item in inventory_data.split(","))
   return inventory_dict #stores the inventory temporarily 
+def spells_assigner():
+    spells_data = user_inventory.loc[user_inventory['username'] == username, 'spells'].values[0]
+    spells_list = [spell.strip() for spell in spells_data.split(',')]
+    return spells_list  # stores the spells temporarily
 def inventory_updater(): #updates inventory on csv
     formatted_inventory = ','.join(f"'{key}':{value}" for key, value in inventory.items())
     user_inventory.loc[user_inventory['username'] == username, ['items']] = formatted_inventory
@@ -362,7 +366,7 @@ def profession(): #main professional handling function
       user_inventory.loc[user_inventory['username'] == username, ['items','spells']] = [f"'Training Wand':{int(1)},'Minor Health Potion':{int(1)}","Wind Strike"]
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
       global inventory_spells
-      inventory_spells = []
+      inventory_spells = spells_assigner()
       inventory = inventory_assigner()
       break
     elif profession_choice in ['2', "Archer", "two", "archer","2.0",2,2.0]:
