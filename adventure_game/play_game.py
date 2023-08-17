@@ -77,34 +77,32 @@ def exit_menu(): #menu to show if they want to exit.
       except Exception:
           print("There has been an unexpected error. Try again")
 def chest_drop(profession_type, level): #random chest drop
-  # ---------- Sorting drop options ----------
-  if profession_type == "Magician":
-    filtered_spells = spells[spells['Level'] <= level + 10]#gets all spells that is within 10 level or same level
-    drop_data = random.randint(1,3)
-    inventory_spells = user_inventory.loc[user_inventory["username"] == username, "spells"].values
-  else:
-    drop_data = random.randint(1,2)
-  filtered_equipment = equipment[(equipment['Class'] == profession_type) & (equipment['Level'] <= level + 3)] #gets all equipments for that profession & same equipment level or 3 above 
-  if drop_data == 1: #equipments
-    drop_type = "Equipments"
-    drop_data = filtered_equipment
-    num_rows = len(filtered_equipment)
-  elif drop_data == 2: #potions
-    drop_type = "Potions"
-    drop_data = potions
-    num_rows = len(potions)
-  else: #spells
-    drop_type = "Spells"
-    drop_data = filtered_spells
-    num_rows = len(filtered_spells)
-
   # ---------- Updating Inventory ----------
   global inventory
   inventory = inventory_assigner() #updates inventory
-
   # ---------- Giving a valid drop ----------
-  while True:#while loop to give them a drop that they don't have.
-    # ---------- Gets Item ----------
+  while True: #while loop to give them a drop that they don't have.
+    # ---------- Sorting drop options ----------
+    if profession_type == "Magician":
+      filtered_spells = spells[spells['Level'] <= level + 10]#gets all spells that is within 10 level or same level
+      drop_data = random.randint(1,3)
+      inventory_spells = user_inventory.loc[user_inventory["username"] == username, "spells"].values
+    else:
+      drop_data = random.randint(1,2)
+    filtered_equipment = equipment[(equipment['Class'] == profession_type) & (equipment['Level'] <= level + 3)] #gets all equipments for that profession & same equipment level or 3 above 
+    if drop_data == 1: #equipments
+      drop_type = "Equipments"
+      drop_data = filtered_equipment
+      num_rows = len(filtered_equipment)
+    elif drop_data == 2: #potions
+      drop_type = "Potions"
+      drop_data = potions
+      num_rows = len(potions)
+    else: #spells
+      drop_type = "Spells"
+      drop_data = filtered_spells
+      num_rows = len(filtered_spells)
+      # ---------- Gets Item ----------
     random_row = random.randint(0,num_rows-1) #gets a random row
     selected_row = drop_data.iloc[random_row] #random drop
     
@@ -123,40 +121,48 @@ def chest_drop(profession_type, level): #random chest drop
     
     # ---------- Iteration for item and amount of item ----------
     # ---------- Equipment not stackable ----------
-    print(item_name,drop_type) #testing data
     if drop_type == "Equipments" and item_name != "Trainer Arrows":
       if item_name not in inventory: #checks if the item is not in inventory
         inventory[item_name] = 1 #adds 1 of the item to inventory
-        print(f"Added {inventory[item_name]} {item_name} to inventory.")
+        print(f"Added 1 {item_name} to inventory.")
+        break
+      else:
+        inventory[item_name] = int(inventory[item_name]) + 1
+        print(f"Added 1 {item_name} to inventory.")
         break
     # ---------- Spells not stackable and stored in spells ----------
     elif drop_type == "Spells":
-      if item_name not in inventory_spells:
-        existing_spells = user_inventory.loc[user_inventory['username'] == username, 'spells'].values[0]
-        updated_spells = existing_spells + ',' + item_name
-        user_inventory.loc[user_inventory['username'] == username, 'spells'] = updated_spells
-        user_inventory.to_csv('adventure_game/data/user_inventory.csv', index=False)
-        break
+      existing_spells = user_inventory.loc[user_inventory['username'] == username, 'spells'].values[0]
+      existing_spells_list = existing_spells.split(',')
+    
+      if item_name in existing_spells_list:
+        print(f"{spacing}\nThe spell {item_name} is already in your spells. Rerolling chest drop...")
+        continue  # Exit the loop without adding the spell to inventory
+      updated_spells = existing_spells + ',' + item_name
+      updated_spells = ','.join(sorted(set(updated_spells.split(','))))
+      user_inventory.loc[user_inventory['username'] == username, 'spells'] = updated_spells
+      user_inventory.to_csv('adventure_game/data/user_inventory.csv', index=False)
+      break
     # ---------- Stackable Potion amount ----------
     elif drop_type == "Potions":
       if item_name not in inventory:
         inventory[item_name] = 1 #adds 1 of the item to inventory
-        print(f"Added {inventory[item_name]} {item_name} to inventory.")
+        print(f"Added 1 {item_name} to inventory.")
         break
       else:
-        inventory[item_name] += 1
-        print(f"Added {inventory[item_name]} {item_name} to inventory.")
+        inventory[item_name] = int(inventory[item_name]) + 1
+        print(f"Added 1 {item_name} to inventory.")
         break
     # ---------- Multiple arrows awarded and stackable ----------
     elif drop_type=="Equipments" and item_name == "Trainer Arrows":
-        if item_name not in inventory:
-          inventory[item_name] = 8 #8 arrows per drop
-          print(f"Added {inventory[item_name]} {item_name} to inventory.")
-          break
-        else:
-          inventory[item_name] += 8 #8 arrows per drop
-          print(f"Added {inventory[item_name]} more {item_name} to inventory.")
-          break
+      if item_name not in inventory:
+        inventory[item_name] = 8 #8 arrows per drop
+        print(f"Added 8 {item_name} to inventory.")
+        break
+      else:
+        inventory[item_name] = int(inventory[item_name]) + 8 #8 arrows per drop
+        print(f"Added 8 more {item_name} to inventory.")
+        break
     # ---------- Additional error handling, should not occur ----------
     else:
       print("There was an error.")
@@ -410,7 +416,6 @@ game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
-make datatype for user_inventory["items"] int.
 add spells updating functions
 fix chest drop; checking inventory then opening chest breaks the system
 fix chet room increasing number if any other function is called and then returned back to old function.
