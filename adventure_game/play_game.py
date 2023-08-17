@@ -134,14 +134,15 @@ def chest_drop(profession_type, level): #random chest drop
     elif drop_type == "Spells":
       existing_spells = user_inventory.loc[user_inventory['username'] == username, 'spells'].values[0]
       existing_spells_list = existing_spells.split(',')
-    
       if item_name in existing_spells_list:
         print(f"{spacing}\nThe spell {item_name} is already in your spells. Rerolling chest drop...")
         continue  # Exit the loop without adding the spell to inventory
+      
       updated_spells = existing_spells + ',' + item_name
       updated_spells = ','.join(sorted(set(updated_spells.split(','))))
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = updated_spells
       user_inventory.to_csv('adventure_game/data/user_inventory.csv', index=False)
+      print(f"Added 1 {item_name} to spells.")
       break
     # ---------- Stackable Potion amount ----------
     elif drop_type == "Potions":
@@ -418,7 +419,7 @@ game() #Run the game
 """ TO-DO:
 add spells updating functions
 fix chest drop; checking inventory then opening chest breaks the system
-fix chet room increasing number if any other function is called and then returned back to old function.
+fix every room increasing number if any other function is called and then returned back to old function.
 fix chest room breaking sometimes when open chest is picked
 remove equipped function and update it to be the inventory UI
 """
