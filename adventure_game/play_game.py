@@ -210,25 +210,33 @@ def inventory_UI():  # UI to see item, spells, and stats
   print('-' * 50)
   inventory_spells = spells_assigner() #reassigns spells
   sleep(1)
-  while True:
+  while True: #loop to let them check info of item/spell/potion
     choice = input(f"Pick an item/spell from inventory to check information, or type 'return' to exit.\n{spacing}\n")
     try:
-      if choice == "return":
+      if choice == "return": #exits function
         return
-      elif choice in inventory.keys():
+      elif choice in inventory.keys() and ("Potion" in choice): #prints info for potion
+        potion_data = potions[(potions['Name'] == choice)]
+        for index,row in potion_data.iterrows():
+          print("↳ Effect:", row['Stat Effect'])
+          print("↳ Power:", int(row['Effect Increase']))
+        print(spacing*3)
+      elif choice in inventory.keys(): #prints info for item
         item_data = equipment[(equipment['Name'] == choice)]
-        for index,row in item_data.iterrows(): #prints user stats
-          print("• Type:", row['Type'])
-          print("• Attack:", int(row['Attack']))
-          print("• Magic Attack:", int(row['Magic_Attack']))
-          print("• Defense:", int(row['Defense']))
-          print("• Level:", int(row['Level']))
-          print("• Class:", row['Class'])
-      elif choice in inventory_spells:
+        for index,row in item_data.iterrows(): 
+          print("↳ Type:", row['Type'])
+          print("↳ Attack:", int(row['Attack']))
+          print("↳ Magic Attack:", int(row['Magic_Attack']))
+          print("↳ Defense:", int(row['Defense']))
+          print("↳ Level:", int(row['Level']))
+          print("↳ Class:", row['Class'])
+        print(spacing*3)
+      elif choice in inventory_spells: #prints info for spells
         spell_data = spells[(spells['Spells'] == choice)]
-        for index,row in spell_data.iterrows(): #prints user stats
-          print("• Mana Loss:", int(row['Mana_Loss_Min']))
-          print("• Level:", int(row['Level']))
+        for index,row in spell_data.iterrows():
+          print("↳ Mana Loss:", int(row['Mana_Loss_Min']))
+          print("↳ Level:", int(row['Level']))
+        print(spacing*3)
       elif choice not in inventory_spells or inventory.keys():
         print("Invalid item/spell.\nTry again.")
         continue
@@ -456,12 +464,12 @@ def game(): #main game controlling function
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
 
-
 game() #Run the game
 # -------------------- Extra things --------------------
 
 
 """ TO-DO:
+fix going to options skipping the room
 add monster ui function
 make monster_fight be functional.
 Add fight_options function
