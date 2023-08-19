@@ -303,7 +303,7 @@ def chest_room(): #main controlling function for chest rooms
   elif room_count> 2 or room_count > 1.0:#normal room stages
     return_option = chest_options()
     if return_option == "open":
-      print("You open the chest")
+      print("Chest opening...")
       profession_type,level = update_details()
       chest_drop(profession_type,level)
     elif return_option == "proceed":
