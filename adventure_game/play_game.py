@@ -185,15 +185,8 @@ def inventory_updater(): #updates inventory on csv
 def inventory_UI():  # UI to see item, spells, and stats
   inventory = inventory_assigner() #assigns updated inventory
   inventory_spells = spells_assigner() #assigns updated spells
-  print(f"{'-' * 50}\n{'':5}Inventory{'':20}Spells\n{'-' * 50}") #inventory and spells title
-  max_item_length = max(len(item) for item in inventory.keys()) #finds max lenght of the name
-  for item, quantity in inventory.items(): #prints out all the inventory items and spells 
-    spell = inventory_spells.pop(0) if inventory_spells else ""
-    max_quantity_width = max(len(str(quantity)) for item, quantity in inventory.items())
-    line = f"• {item:<{max_item_length}} : x{quantity:>{max_quantity_width}}  | • {spell:<20}" if spell else f"• {item:<{max_item_length}} : x{quantity:>{max_quantity_width}}"
-    print(line)
   print(f"{'-' * 50}\n{'':15}User Statistics{'':10}\n{'-' * 50}") #user stats under the inventory and spells 
-  for index, row in userdata.iterrows():
+  for index,row in userdata.iterrows(): #prints user stats
     print("• Username:", row['username'])
     print("• Profession:", row['profession'])
     print("• Level:", int(row['level']))
@@ -207,7 +200,41 @@ def inventory_UI():  # UI to see item, spells, and stats
     print("• Options:")
     print("  ↳ Keep Slowdown:", options['sleep'])
     print("  ↳ Skip Empty Rooms:", options['skipEmpty'])
+  print(f"{'-' * 50}\n{'':5}Inventory{'':20}Spells\n{'-' * 50}") #inventory and spells title
+  max_item_length = max(len(item) for item in inventory.keys()) #finds max lenght of the name
+  for item, quantity in inventory.items(): #prints out all the inventory items and spells 
+    spell = inventory_spells.pop(0) if inventory_spells else ""
+    max_quantity_width = max(len(str(quantity)) for item, quantity in inventory.items())
+    line = f"• {item:<{max_item_length}} : x{quantity:>{max_quantity_width}}  | • {spell:<20}" if spell else f"• {item:<{max_item_length}} : x{quantity:>{max_quantity_width}}"
+    print(line)
   print('-' * 50)
+  inventory_spells = spells_assigner() #reassigns spells
+  sleep(1)
+  while True:
+    choice = input(f"Pick an item/spell from inventory to check information, or type 'return' to exit.\n{spacing}\n")
+    try:
+      if choice == "return":
+        return
+      elif choice in inventory.keys():
+        item_data = equipment[(equipment['Name'] == choice)]
+        for index,row in item_data.iterrows(): #prints user stats
+          print("• Type:", row['Type'])
+          print("• Attack:", int(row['Attack']))
+          print("• Magic Attack:", int(row['Magic_Attack']))
+          print("• Defense:", int(row['Defense']))
+          print("• Level:", int(row['Level']))
+          print("• Class:", row['Class'])
+      elif choice in inventory_spells:
+        spell_data = spells[(spells['Spells'] == choice)]
+        for index,row in spell_data.iterrows(): #prints user stats
+          print("• Mana Loss:", int(row['Mana_Loss_Min']))
+          print("• Level:", int(row['Level']))
+      elif choice not in inventory_spells or inventory.keys():
+        print("Invalid item/spell.\nTry again.")
+        continue
+    except Exception:
+      print("Invalid input.\nInput item name or type 'return' to exit.")
+      continue
 # -------------------- Room options function --------------------
 def empty_options(): #option list for empty rooms.
   while True:
@@ -301,7 +328,7 @@ def monster_fight(): #monster fight options
 def room_counter(increment=1):# only write room_counter() to increase the room by 1, write room_counter(x) (x being number above 1) to add more than 1 room
     global room_count
     if 'room_count' not in globals():
-        room_count = 0
+      room_count = 0
     room_count += increment
     user_details.loc[user_details['username'] == username, 'room'] = room_count
     user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
@@ -428,9 +455,18 @@ def game(): #main game controlling function
     sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
+
+room_count = 1
+inventory_UI()
+
 game() #Run the game
 # -------------------- Extra things --------------------
 
+
 """ TO-DO:
-add checking items information for the inventory_UI and displaying information and let them return when "return" or "exit" is said
+add monster ui function
+make monster_fight be functional.
+Add fight_options function
+Experience function with the math
+proper leveling system based on monster beaten or progression in levels
 """
