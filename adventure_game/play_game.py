@@ -236,7 +236,7 @@ def empty_options(): #option list for empty rooms.
         print(f"{spacing*4}\nInvalid option. Must be 1-4.")
         continue
     except ValueError:
-      print("Invalid Value Type. Input must be integer between 1-4.")
+      print("Invalid Value Type.\nInput must be integer between 1-4.")
       continue
 def chest_options(): #option list for chest rooms.
   while True:
@@ -265,7 +265,7 @@ def chest_options(): #option list for chest rooms.
         print(f"{spacing * 4}\nInvalid option. Must be 1-5.")
         continue
     except ValueError:
-      print("Invalid Value Type. Input must be an integer between 1-5.")
+      print("Invalid Value Type.\nInput must be an integer between 1-5.")
       continue
 def monster_options(): #option list for monster rooms.
   while True:
@@ -292,7 +292,7 @@ def monster_options(): #option list for monster rooms.
         print(f"{spacing * 4}\nInvalid option. Must be 1-4.")
         continue
     except ValueError:
-      print("Invalid Value Type. Input must be an integer between 1-4.")
+      print("Invalid Value Type.\nInput must be an integer between 1-4.")
       continue
 # -------------------- Monster gameplay function --------------------
 def monster_fight(): #monster fight options
