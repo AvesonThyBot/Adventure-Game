@@ -431,5 +431,5 @@ game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
-redesign inventory UI to fit to be read at once
+add checking items information for the inventory_UI and displaying information and let them return when "return" or "exit" is said
 """
