@@ -261,16 +261,14 @@ def monster_options(): #option list for monster rooms.
         print(inventory)
         continue
       elif option_choice == 3:
-        return "proceed"
-      elif option_choice == 4:
         exit_menu()
-      elif option_choice == 5:
+      elif option_choice == 4:
         options_menu()
       else:
-        print(f"{spacing * 4}\nInvalid option. Must be 1-5.")
+        print(f"{spacing * 4}\nInvalid option. Must be 1-4.")
         continue
     except ValueError:
-      print("Invalid Value Type. Input must be an integer between 1-5.")
+      print("Invalid Value Type. Input must be an integer between 1-4.")
       continue
 # -------------------- Monster gameplay function --------------------
 def monster_fight(): #monster fight options
