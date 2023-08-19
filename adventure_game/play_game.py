@@ -412,6 +412,5 @@ game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
-fix every room increasing number if any other function is called and then returned back to old function.
 remove equipped function and update it to be the inventory UI
 """
