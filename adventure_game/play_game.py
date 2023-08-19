@@ -189,7 +189,8 @@ def inventory_UI():  # UI to see item, spells, and stats
   max_item_length = max(len(item) for item in inventory.keys()) #finds max lenght of the name
   for item, quantity in inventory.items(): #prints out all the inventory items and spells 
     spell = inventory_spells.pop(0) if inventory_spells else ""
-    line = f"• {item:<{max_item_length}} : x{quantity}  | • {spell:<20}" if spell else f"• {item:<{max_item_length}} : x{quantity}"
+    max_quantity_width = max(len(str(quantity)) for item, quantity in inventory.items())
+    line = f"• {item:<{max_item_length}} : x{quantity:>{max_quantity_width}}  | • {spell:<20}" if spell else f"• {item:<{max_item_length}} : x{quantity:>{max_quantity_width}}"
     print(line)
   print(f"{'-' * 50}\n{'':15}User Statistics{'':10}\n{'-' * 50}") #user stats under the inventory and spells 
   for index, row in userdata.iterrows():
