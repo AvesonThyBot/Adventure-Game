@@ -187,7 +187,8 @@ def inventory_UI(): #currently equipped item
   pass
 # -------------------- Room options function --------------------
 def empty_options(): #option list for empty rooms.
-  option_choice = input(f"""\
+  while True:
+    option_choice = input(f"""\
 ------- Empty Room Options -------
 1) Proceed to room {room_count + 1}.
 2) Check Inventory.
@@ -195,64 +196,57 @@ def empty_options(): #option list for empty rooms.
 4) Check options
 ----------------------------------
 """)
-  try:
-    option_choice = int(option_choice)
-    if option_choice == 1:
-      return
-    elif option_choice == 2:
-      print(inventory)
-      empty_options()
-    elif option_choice == 3:
-      exit_menu()
-      return
-    elif option_choice == 4:
-      options_menu()
-      return
-    else:
-      print(f"{spacing*4}\nInvalid option. Must be 1-4.")
-      empty_options()
-  except ValueError:
-    print("Invalid Value Type. Input must be integer between 1-4.")
-    empty_options()
-  except Exception:
-    print("Input must be integer between 1-4.")
-    empty_options()
+    try:
+      option_choice = int(option_choice)
+      if option_choice == 1:
+        return
+      elif option_choice == 2:
+        print(inventory)
+        continue
+      elif option_choice == 3:
+        exit_menu()
+        return
+      elif option_choice == 4:
+        options_menu()
+        return
+      else:
+        print(f"{spacing*4}\nInvalid option. Must be 1-4.")
+        continue
+    except ValueError:
+      print("Invalid Value Type. Input must be integer between 1-4.")
+      continue
 def chest_options(): #option list for chest rooms.
-  option_choice = input(f"""\
+  while True:
+    option_choice = input(f"""\
 ------- Chest Room Options -------
 1) Open chest
 2) Check Inventory.
-3) Proceed to room {room_count+1}
+3) Proceed to room {room_count + 1}
 4) Save & Quit Game.
 5) Check options
 ----------------------------------
 """)
-  try:
-    option_choice = int(option_choice)
-    if option_choice == 1:
-      return "open"
-    elif option_choice == 2:
-      print(inventory)
-      chest_options()
-    elif option_choice == 3:
-      return "proceed"
-    elif option_choice == 4:
-      exit_menu()
-      return
-    elif option_choice == 5:
-      options_menu()
-      return
-    else:
-      print(f"{spacing*4}\nInvalid option. Must be 1-4.")
-      chest_options()
-  except ValueError:
-    print("Invalid Value Type. Input must be integer between 1-4.")
-    chest_options()
-  except Exception:
-    print("Input must be integer between 1-4.")
-    chest_options()
+    try:
+      option_choice = int(option_choice)
+      if option_choice == 1:
+        return "open"
+      elif option_choice == 2:
+        print(inventory)
+      elif option_choice == 3:
+        return "proceed"
+      elif option_choice == 4:
+        exit_menu()
+      elif option_choice == 5:
+        options_menu()
+      else:
+        print(f"{spacing * 4}\nInvalid option. Must be 1-5.")
+        continue
+    except ValueError:
+      print("Invalid Value Type. Input must be an integer between 1-5.")
+      continue
 def monster_options(): #option list for monster rooms.
-  option_choice = input(f"""\
+  while True:
+    option_choice = input(f"""\
 ------- Monster Room Options -------
 1) Fight monster.
 2) Check Inventory.
@@ -260,28 +254,25 @@ def monster_options(): #option list for monster rooms.
 4) Check options
 ----------------------------------
 """)
-  try:
-    option_choice = int(option_choice)
-    if option_choice == 1:
-      return
-    elif option_choice == 2:
-      print(inventory)
-      monster_options()
-    elif option_choice == 3:
-      exit_menu()
-      return
-    elif option_choice == 4:
-      options_menu()
-      return
-    else:
-      print(f"{spacing*4}\nInvalid option. Must be 1-4.")
-      monster_options()
-  except ValueError:
-    print("Invalid Value Type. Input must be integer between 1-4.")
-    monster_options()
-  except Exception:
-    print("Input must be integer between 1-4.")
-    monster_options()
+    try:
+      option_choice = int(option_choice)
+      if option_choice == 1:
+        return 
+      elif option_choice == 2:
+        print(inventory)
+        continue
+      elif option_choice == 3:
+        return "proceed"
+      elif option_choice == 4:
+        exit_menu()
+      elif option_choice == 5:
+        options_menu()
+      else:
+        print(f"{spacing * 4}\nInvalid option. Must be 1-5.")
+        continue
+    except ValueError:
+      print("Invalid Value Type. Input must be an integer between 1-5.")
+      continue
 # -------------------- Monster gameplay function --------------------
 def monster_fight(): #monster fight options
   pass
@@ -423,5 +414,4 @@ game() #Run the game
 """ TO-DO:
 fix every room increasing number if any other function is called and then returned back to old function.
 remove equipped function and update it to be the inventory UI
-fix invalid input having to pick correct option multiple times on all options.
 """
