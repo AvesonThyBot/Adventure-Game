@@ -118,7 +118,7 @@ def chest_drop(profession_type, level): #random chest drop
       elif "name" in selected_row.index:
         item_name = selected_row.loc["name"]
       else:
-        print("There was an Error with chest drop. ID: Item_name")
+        print(f"There was an Error with chest drop. ID: {item_name}")
     
     # ---------- Iteration for item and amount of item ----------
     # ---------- Equipment not stackable ----------
@@ -134,7 +134,6 @@ def chest_drop(profession_type, level): #random chest drop
     # ---------- Spells not stackable and stored in spells ----------
     elif drop_type == "Spells":
       if item_name in inventory_spells:
-        print(f"{spacing}\nThe spell {item_name} is already in your spells. Rerolling chest drop...")
         continue  # Exit the loop without adding the spell to inventory
 
       inventory_spells.append(item_name)
