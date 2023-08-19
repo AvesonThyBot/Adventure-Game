@@ -125,11 +125,11 @@ def chest_drop(profession_type, level): #random chest drop
     if drop_type == "Equipments" and item_name != "Trainer Arrows":
       if item_name not in inventory: #checks if the item is not in inventory
         inventory[item_name] = 1 #adds 1 of the item to inventory
-        print(f"Added 1 {item_name} to inventory.")
+        print(f"Added 1 {item_name} to inventory!")
         break
       else:
         inventory[item_name] = int(inventory[item_name]) + 1
-        print(f"Added 1 {item_name} to inventory.")
+        print(f"Added 1 {item_name} to inventory!")
         break
     # ---------- Spells not stackable and stored in spells ----------
     elif drop_type == "Spells":
@@ -140,28 +140,28 @@ def chest_drop(profession_type, level): #random chest drop
       updated_spells = ','.join(sorted(set(inventory_spells)))
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = updated_spells
       user_inventory.to_csv('adventure_game/data/user_inventory.csv', index=False)
-      print(f"Added 1 {item_name} to spells.")
+      print(f"Added 1 {item_name} to spells!")
       break
 
     # ---------- Stackable Potion amount ----------
     elif drop_type == "Potions":
       if item_name not in inventory:
         inventory[item_name] = 1 #adds 1 of the item to inventory
-        print(f"Added 1 {item_name} to inventory.")
+        print(f"Added 1 {item_name} to inventory!")
         break
       else:
         inventory[item_name] = int(inventory[item_name]) + 1
-        print(f"Added 1 {item_name} to inventory.")
+        print(f"Added 1 {item_name} to inventory!")
         break
     # ---------- Multiple arrows awarded and stackable ----------
     elif drop_type=="Equipments" and item_name == "Trainer Arrows":
       if item_name not in inventory:
         inventory[item_name] = 8 #8 arrows per drop
-        print(f"Added 8 {item_name} to inventory.")
+        print(f"Added 8 {item_name} to inventory!")
         break
       else:
         inventory[item_name] = int(inventory[item_name]) + 8 #8 arrows per drop
-        print(f"Added 8 more {item_name} to inventory.")
+        print(f"Added 8 more {item_name} to inventory!")
         break
     # ---------- Additional error handling, should not occur ----------
     else:
@@ -182,8 +182,29 @@ def inventory_updater(): #updates inventory on csv
   formatted_inventory = ','.join(f"'{key}':{value}" for key, value in inventory.items())
   user_inventory.loc[user_inventory['username'] == username, ['items']] = formatted_inventory
   user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
-def inventory_UI(): #currently equipped item
-  pass
+def inventory_UI(): #UI to see item,spells and stats
+  inventory = inventory_assigner()
+  print(f"{spacing*4}\nInventory:\n{spacing*4}")
+  for item in inventory.keys():
+    print(f"{item}: x{inventory[item]}.")
+  inventory_spells = spells_assigner()
+  print(f"{spacing*4}\nSpells:\n{spacing*4}")
+  for spells in inventory_spells:
+    print(spells)
+  print(f"{spacing*4}\nUser Statistics:\n{spacing*4}")
+  for index, row in userdata.iterrows():
+    print(f"Username: {row['username']}")
+    print(f"Profession: {row['profession']}")
+    print(f"Level: {int(row['level'])}")
+    print(f"Experience: {int(row['experience'])}")
+    print(f"Health: {int(row['health'])}")
+    print(f"Mana: {int(row['mana'])}")
+    print(f"Attack: {int(row['attack'])}")
+    print(f"Magic Attack: {int(row['magic_attack'])}")
+    print(f"Defense: {int(row['defense'])}")
+    print(f"Room: {int(row['room'])}")
+    print(f"Options:\n1) Keep Slowdown: {options['sleep']}\n2) Skip Empty Rooms: {options['skipEmpty']}")
+    print(spacing*4)
 # -------------------- Room options function --------------------
 def empty_options(): #option list for empty rooms.
   while True:
@@ -349,7 +370,7 @@ def profession(): #main professional handling function
     global inventory
     if profession_choice in ['1', "Magician", "one", "magician","1.0",1,1.0]:
       print("Congrats! You have chosen the profession Magician!")
-      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Magician',0, 0, 10, 0,100,200,options]
+      user_details.loc[user_details['username'] == username, ['profession','experience','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Magician',0,0, 0, 10, 0,100,200,options]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items','spells']] = [f"'Training Wand':{int(1)},'Minor Health Potion':{int(1)}","Wind Strike"]
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
@@ -359,7 +380,7 @@ def profession(): #main professional handling function
       break
     elif profession_choice in ['2', "Archer", "two", "archer","2.0",2,2.0]:
       print("Congrats! You have chosen the profession Archer!")
-      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Archer',0, 10, 0, 1,200,100,options]
+      user_details.loc[user_details['username'] == username, ['profession','experience','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Archer',0,0,10,0,1,200,100,options]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items']] = [f"'Trainer Bow': {int(1)},'Trainer Arrows':{int(16)},'Minor Health Potion':{int(1)}"]
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
@@ -368,7 +389,7 @@ def profession(): #main professional handling function
       break
     elif profession_choice in ['3', "Knight", "three", "knight","3.0",3,3.0]:
       print("Congrats! You have chosen the profession Knight!")
-      user_details.loc[user_details['username'] == username, ['profession','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Knight',0, 10, 10, 0,100,100,options]
+      user_details.loc[user_details['username'] == username, ['profession','experience','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Knight',0,0,10,10,0,100,100,options]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items']] = [f"'Training Sword':{int(1)},'Training Shield':{int(1)},'Minor Health Potion':{int(1)}"]
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
@@ -404,7 +425,6 @@ def game(): #main game controlling function
     sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
-# chest_drop("Magician",0)
 game() #Run the game
 # -------------------- Extra things --------------------
 
