@@ -76,7 +76,7 @@ def exit_menu(): #menu to show if they want to exit.
           continue
       except Exception:
           print("There has been an unexpected error. Try again")
-def chest_drop(profession_type, level): #random chest drop
+def chest_drop(profession_type, level): #random chest drop  
   # ---------- Updating Inventory ----------
   global inventory
   inventory = inventory_assigner() #updates inventory
@@ -133,17 +133,17 @@ def chest_drop(profession_type, level): #random chest drop
         break
     # ---------- Spells not stackable and stored in spells ----------
     elif drop_type == "Spells":
-      existing_spells_list = inventory_spells.split(',')
-      if item_name in existing_spells_list:
+      if item_name in inventory_spells:
         print(f"{spacing}\nThe spell {item_name} is already in your spells. Rerolling chest drop...")
         continue  # Exit the loop without adding the spell to inventory
-      
-      updated_spells = inventory_spells + ',' + item_name
-      updated_spells = ','.join(sorted(set(updated_spells.split(','))))
+
+      inventory_spells.append(item_name)
+      updated_spells = ','.join(sorted(set(inventory_spells)))
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = updated_spells
       user_inventory.to_csv('adventure_game/data/user_inventory.csv', index=False)
       print(f"Added 1 {item_name} to spells.")
       break
+
     # ---------- Stackable Potion amount ----------
     elif drop_type == "Potions":
       if item_name not in inventory:
@@ -180,9 +180,9 @@ def spells_assigner():
     spells_list = [spell.strip() for spell in spells_data.split(',')]
     return spells_list  # stores the spells temporarily
 def inventory_updater(): #updates inventory on csv
-    formatted_inventory = ','.join(f"'{key}':{value}" for key, value in inventory.items())
-    user_inventory.loc[user_inventory['username'] == username, ['items']] = formatted_inventory
-    user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
+  formatted_inventory = ','.join(f"'{key}':{value}" for key, value in inventory.items())
+  user_inventory.loc[user_inventory['username'] == username, ['items']] = formatted_inventory
+  user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
 def inventory_UI(): #currently equipped item
   pass
 # -------------------- Room options function --------------------
@@ -421,9 +421,7 @@ game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
-add spells updating functions
-fix chest drop; checking inventory then opening chest breaks the system
 fix every room increasing number if any other function is called and then returned back to old function.
-fix chest room breaking sometimes when open chest is picked
 remove equipped function and update it to be the inventory UI
+fix invalid input having to pick correct option multiple times on all options.
 """
