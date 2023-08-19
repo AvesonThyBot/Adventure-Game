@@ -427,8 +427,6 @@ def game(): #main game controlling function
     sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
-room_count = 1
-inventory_UI()
 game() #Run the game
 # -------------------- Extra things --------------------
 
