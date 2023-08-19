@@ -182,29 +182,31 @@ def inventory_updater(): #updates inventory on csv
   formatted_inventory = ','.join(f"'{key}':{value}" for key, value in inventory.items())
   user_inventory.loc[user_inventory['username'] == username, ['items']] = formatted_inventory
   user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
-def inventory_UI(): #UI to see item,spells and stats
-  inventory = inventory_assigner()
-  print(f"{spacing*4}\nInventory:\n{spacing*4}")
-  for item in inventory.keys():
-    print(f"• {item}: x{inventory[item]}.")
-  inventory_spells = spells_assigner()
-  print(f"{spacing*4}\nSpells:\n{spacing*4}")
-  for spells in inventory_spells:
-    print(f"• {spells}")
-  print(f"{spacing*4}\nUser Statistics:\n{spacing*4}")
+def inventory_UI():  # UI to see item, spells, and stats
+  inventory = inventory_assigner() #assigns updated inventory
+  inventory_spells = spells_assigner() #assigns updated spells
+  print(f"{'-' * 50}\n{'':5}Inventory{'':20}Spells\n{'-' * 50}") #inventory and spells title
+  max_item_length = max(len(item) for item in inventory.keys()) #finds max lenght of the name
+  for item, quantity in inventory.items(): #prints out all the inventory items and spells 
+    spell = inventory_spells.pop(0) if inventory_spells else ""
+    line = f"• {item:<{max_item_length}} : x{quantity}  | • {spell:<20}" if spell else f"• {item:<{max_item_length}} : x{quantity}"
+    print(line)
+  print(f"{'-' * 50}\n{'':15}User Statistics{'':10}\n{'-' * 50}") #user stats under the inventory and spells 
   for index, row in userdata.iterrows():
-    print(f"Username: {row['username']}")
-    print(f"Profession: {row['profession']}")
-    print(f"Level: {int(row['level'])}")
-    print(f"Experience: {int(row['experience'])}")
-    print(f"Health: {int(row['health'])}")
-    print(f"Mana: {int(row['mana'])}")
-    print(f"Attack: {int(row['attack'])}")
-    print(f"Magic Attack: {int(row['magic_attack'])}")
-    print(f"Defense: {int(row['defense'])}")
-    print(f"Room: {int(room_count)}")
-    print(f"Options:\n1) Keep Slowdown: {options['sleep']}\n2) Skip Empty Rooms: {options['skipEmpty']}")
-    print(spacing*4)
+    print("• Username:", row['username'])
+    print("• Profession:", row['profession'])
+    print("• Level:", int(row['level']))
+    print("• Experience:", int(row['experience']))
+    print("• Health:", int(row['health']))
+    print("• Mana:", int(row['mana']))
+    print("• Attack:", int(row['attack']))
+    print("• Magic Attack:", int(row['magic_attack']))
+    print("• Defense:", int(row['defense']))
+    print("• Room:", int(room_count))
+    print("• Options:")
+    print("  ↳ Keep Slowdown:", options['sleep'])
+    print("  ↳ Skip Empty Rooms:", options['skipEmpty'])
+  print('-' * 50)
 # -------------------- Room options function --------------------
 def empty_options(): #option list for empty rooms.
   while True:
@@ -425,6 +427,8 @@ def game(): #main game controlling function
     sleep(1)
     random_room()
     inventory_updater() #updates inventory to csv after room is complete.
+room_count = 1
+inventory_UI()
 game() #Run the game
 # -------------------- Extra things --------------------
 
