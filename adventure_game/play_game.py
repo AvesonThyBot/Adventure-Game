@@ -266,7 +266,6 @@ def empty_options(): #option list for empty rooms.
         return
       elif option_choice == 4:
         options_menu()
-        return
       else:
         print(f"{spacing*4}\nInvalid option. Must be 1-4.")
         continue
@@ -469,7 +468,6 @@ game() #Run the game
 
 
 """ TO-DO:
-fix going to options skipping the room
 add monster ui function
 make monster_fight be functional.
 Add fight_options function
