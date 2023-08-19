@@ -186,11 +186,11 @@ def inventory_UI(): #UI to see item,spells and stats
   inventory = inventory_assigner()
   print(f"{spacing*4}\nInventory:\n{spacing*4}")
   for item in inventory.keys():
-    print(f"{item}: x{inventory[item]}.")
+    print(f"• {item}: x{inventory[item]}.")
   inventory_spells = spells_assigner()
   print(f"{spacing*4}\nSpells:\n{spacing*4}")
   for spells in inventory_spells:
-    print(spells)
+    print(f"• {spells}")
   print(f"{spacing*4}\nUser Statistics:\n{spacing*4}")
   for index, row in userdata.iterrows():
     print(f"Username: {row['username']}")
@@ -202,7 +202,7 @@ def inventory_UI(): #UI to see item,spells and stats
     print(f"Attack: {int(row['attack'])}")
     print(f"Magic Attack: {int(row['magic_attack'])}")
     print(f"Defense: {int(row['defense'])}")
-    print(f"Room: {int(row['room'])}")
+    print(f"Room: {int(room_count)}")
     print(f"Options:\n1) Keep Slowdown: {options['sleep']}\n2) Skip Empty Rooms: {options['skipEmpty']}")
     print(spacing*4)
 # -------------------- Room options function --------------------
@@ -221,7 +221,7 @@ def empty_options(): #option list for empty rooms.
       if option_choice == 1:
         return
       elif option_choice == 2:
-        print(inventory)
+        inventory_UI()
         continue
       elif option_choice == 3:
         exit_menu()
@@ -251,7 +251,7 @@ def chest_options(): #option list for chest rooms.
       if option_choice == 1:
         return "open"
       elif option_choice == 2:
-        print(inventory)
+        inventory_UI()
       elif option_choice == 3:
         return "proceed"
       elif option_choice == 4:
@@ -279,7 +279,7 @@ def monster_options(): #option list for monster rooms.
       if option_choice == 1:
         return 
       elif option_choice == 2:
-        print(inventory)
+        inventory_UI()
         continue
       elif option_choice == 3:
         exit_menu()
@@ -429,5 +429,5 @@ game() #Run the game
 # -------------------- Extra things --------------------
 
 """ TO-DO:
-remove equipped function and update it to be the inventory UI
+redesign inventory UI to fit to be read at once
 """
