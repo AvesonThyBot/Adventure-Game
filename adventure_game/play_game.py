@@ -381,6 +381,15 @@ def random_room(): #function to call a random room from the 3
     chest_room()
   else:
     monster_room()
+# -------------------- Experience and Level function --------------------
+def update_level(): #updates the data
+  pass
+def experience_gain(): #checks the amount of experience they gained and coverts to level, experience
+  pass
+def experience(): #calculates the amount of experience gained
+  pass
+def experience_handler(room_type): #handles all the experience function in 1 function.
+  pass
 # -------------------- Profession function --------------------
 def profession_info(): #gives them information of professions
   sleep(1)
