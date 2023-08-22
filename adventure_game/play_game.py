@@ -388,8 +388,27 @@ def experience_gain(): #checks the amount of experience they gained and coverts 
   pass
 def experience(): #calculates the amount of experience gained
   pass
-def experience_handler(room_type): #handles all the experience function in 1 function.
-  pass
+def experience_handler(room_type,monster_hp=None): #handles all the experience function in 1 function.
+  while True:
+    level, current_xp = user_details.loc[user_details['username'] == username, ['level', 'experience']].values[0] #updates to the latest level and xp in csv
+    required_xp = level*100*1.25
+    if room_type == "empty":
+      temp_xp = 10 #progression xp per room
+    elif room_type == "chest":
+      temp_xp = 10 #progression xp per room
+    elif room_type == "monster":
+      temp_xp = monster_hp*4 #profression xp for beating monster
+    
+    temp_xp += current_xp #adds all the xp avaiable together
+    while temp_xp >= required_xp: #gained xp more than or equal to required xp
+      level += 1
+      temp_xp -= required_xp
+    current_xp = int(temp_xp) #makes current_xp the new remaining xp
+    
+
+  
+  
+  
 # -------------------- Profession function --------------------
 def profession_info(): #gives them information of professions
   sleep(1)
@@ -416,7 +435,7 @@ def profession(): #main professional handling function
     global inventory
     if profession_choice in ['1', "Magician", "one", "magician","1.0",1,1.0]:
       print("Congrats! You have chosen the profession Magician!")
-      user_details.loc[user_details['username'] == username, ['profession','experience','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Magician',0,0, 0, 10, 0,100,200,options]
+      user_details.loc[user_details['username'] == username, ['profession','experience','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Magician',0,1, 0, 10, 0,100,200,options]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items','spells']] = [f"'Training Wand':{int(1)},'Minor Health Potion':{int(1)}","Wind Strike"]
       user_inventory.to_csv("adventure_game/data/user_inventory.csv", index=False, mode='w')
@@ -426,7 +445,7 @@ def profession(): #main professional handling function
       break
     elif profession_choice in ['2', "Archer", "two", "archer","2.0",2,2.0]:
       print("Congrats! You have chosen the profession Archer!")
-      user_details.loc[user_details['username'] == username, ['profession','experience','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Archer',0,0,10,0,1,200,100,options]
+      user_details.loc[user_details['username'] == username, ['profession','experience','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Archer',0,1,10,0,1,200,100,options]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items']] = [f"'Trainer Bow': {int(1)},'Trainer Arrows':{int(16)},'Minor Health Potion':{int(1)}"]
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
@@ -435,7 +454,7 @@ def profession(): #main professional handling function
       break
     elif profession_choice in ['3', "Knight", "three", "knight","3.0",3,3.0]:
       print("Congrats! You have chosen the profession Knight!")
-      user_details.loc[user_details['username'] == username, ['profession','experience','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Knight',0,0,10,10,0,100,100,options]
+      user_details.loc[user_details['username'] == username, ['profession','experience','level','attack','magic_attack', 'defense', 'health','mana','options']] = ['Knight',0,1,10,10,0,100,100,options]
       user_details.to_csv("adventure_game/data/user_details.csv", index=False, mode='w')
       user_inventory.loc[user_inventory['username'] == username, ['items']] = [f"'Training Sword':{int(1)},'Training Shield':{int(1)},'Minor Health Potion':{int(1)}"]
       user_inventory.loc[user_inventory['username'] == username, 'spells'] = ''
