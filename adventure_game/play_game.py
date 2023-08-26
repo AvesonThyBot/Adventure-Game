@@ -405,10 +405,6 @@ def experience_handler(room_type,monster_hp=None): #handles all the experience f
       temp_xp -= required_xp
     current_xp = int(temp_xp) #makes current_xp the new remaining xp
     
-
-  
-  
-  
 # -------------------- Profession function --------------------
 def profession_info(): #gives them information of professions
   sleep(1)
